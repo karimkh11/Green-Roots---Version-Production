@@ -1,0 +1,54 @@
+<%- include('partials/headeer', { title: title }) %>
+
+<main>
+    <div class="container">
+<h1>Gestion des comptes utilisateurs</h1>
+
+   <!-- Formulaire de création de compte -->
+   <% if (errorMessage && errorMessage.length > 0) { %>
+    <p class="error"><%= errorMessage %></p>
+<% } %>
+
+<form action="/admin/create-account" method="POST">
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input class="form-input" type="email" id="email" name="email" required>
+    </div>
+    <div class="form-group">
+        <label for="password">Mot de passe</label>
+        <input class="form-input" type="password" id="password" name="password" required>
+    </div>
+    <div class="form-group">
+        <label for="firstname">Prénom</label>
+        <input class="form-input" type="text" id="firstname" name="firstname" required>
+    </div>
+    <div class="form-group">
+        <label for="lastname">Nom</label>
+        <input class="form-input" type="text" id="lastname" name="lastname" required>
+    </div>
+    <div class="form-group">
+        <label for="telephone">Téléphone</label>
+        <input class="form-input" type="tel" id="telephone" name="telephone" required>
+    </div>
+    <div class="form-group">
+        <label for="birthday">Date de naissance</label>
+        <input class="form-input" type="date" id="birthday" name="birthday" required>
+    </div>
+    <div class="form-group">
+        <label for="locality">Ville</label>
+        <input class="form-input" type="text" id="locality" name="locality" required>
+    </div>
+    <div class="form-group">
+        <label for="role">Rôle</label>
+        <select class="form-input" id="role" name="role" required>
+            <option value="user">Utilisateur</option>
+            <option value="project-manager">Chef de projet</option>
+            <option value="partner">partner</option>
+        </select>
+    </div>
+    <button class="element" type="submit">Créer le compte</button>
+</form>
+</div>
+</main>
+</body>
+</html>

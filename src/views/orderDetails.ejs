@@ -1,0 +1,17 @@
+<%- include('partials/headeer') %>
+
+
+<h2>Détails de la Commande</h2>
+<p>Prix total: <%= order.total.toFixed(2) %> €</p>
+<ul>
+    <% if (order.commandLines && order.commandLines.length > 0) { %>
+        <% order.commandLines.forEach(commandLine => { %>
+            <li><%= commandLine.tree.name %> - Quantité: <%= commandLine.quantity %></li>
+            <li><img src="<%= encodeURI(commandLine.tree.image) %>" alt="<%= encodeURIComponent(commandLine.tree.name) %>"></li>
+        <% }); %>
+    <% } else { %>
+        <li>Aucun article trouvé pour cette commande.</li>
+    <% } %>
+</ul>
+
+

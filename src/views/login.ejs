@@ -1,0 +1,37 @@
+<%- include('partials/headeer') %>
+
+    <!-- <div class="container">
+        <h1>Connexion</h1> -->
+        <% if (errorMessage && errorMessage.length > 0) { %>
+            <p class="error"><%= errorMessage %></p>
+        <% } %>
+        
+     <div class="vid-container">
+       
+        <div class="inner-container">
+          
+          <div class="box">
+            <h1>Login</h1>
+            <form id="loginForm" action="/login" method="POST">
+               
+                    <label class="sr-only" for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="email" required>
+               
+                
+                    <label class="sr-only" for="password">Mot de passe</label>
+                    <input type="password" id="password" name="password" placeholder="password" required>
+                    <input type="hidden" id="localCart" name="localCart">
+                <button class="element" type="submit">Se connecter</button>
+            </form>
+            <p>Pas encore inscrit ? <a class="link" href="/register">Inscrivez-vous ici</a></p>
+          </div>
+        </div>
+      </div>
+      <script>
+        document.getElementById('loginForm').addEventListener('submit', function() {
+            const localCart = localStorage.getItem('cart') || '[]';
+            document.getElementById('localCart').value = localCart;
+        });
+    </script>
+</body> 
+</html>

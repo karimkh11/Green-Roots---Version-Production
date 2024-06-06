@@ -1,0 +1,46 @@
+<%- include('partials/headeer') %>
+
+<h1>Upload Tree Image</h1>
+<form action="/admin/uploadTreeImage" method="POST">
+    <!-- Input fields for tree image upload -->
+    <label for="imageUrl">Image URL:</label>
+    <input type="text" id="imageUrl" name="imageUrl" required><br>
+    <label for="publicId">Public ID:</label>
+    <input type="text" id="publicId" name="publicId" required><br>
+
+    <!-- Campaign ID dropdown -->
+    <label for="campaign_id">Campaign:</label>
+    <select id="campaign_id" name="campaign_id" required>
+        <option value="1">Campaign 1</option>
+        <option value="<%= campaigns %>"><%= campaigns.id %></option>
+      </select>
+
+    <!-- User ID dropdown -->
+    <label for="user_id">User:</label>
+    <select id="user_id" name="user_id" required>
+        <% for (const user of users) { %>
+            <option value="<%= user.id %>"><%= user.firstname %> <%= user.lastname %></option>
+        <% }; %>
+    </select><br>
+
+    <!-- Other input fields for tree details -->
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required><br>
+    <label for="description">Description:</label>
+    <input type="text" id="description" name="description" required><br>
+    <label for="price">Price:</label>
+    <input type="number" id="price" name="price" required><br>
+    <label for="date_of_purchase">Date of Purchase:</label>
+    <input type="date" id="date_of_purchase" name="date_of_purchase" required><br>
+    <label for="status">Status:</label>
+    <input type="text" id="status" name="status" required><br>
+    <label for="planting_date">Planting Date:</label>
+    <input type="date" id="planting_date" name="planting_date" required><br>
+    <label for="gps_coordinates">GPS Coordinates:</label>
+    <input type="text" id="gps_coordinates" name="gps_coordinates" required><br>
+    <!-- Submit button -->
+    <input type="submit" value="Upload Image and Create Tree">
+</form>
+
+</body>
+</html>

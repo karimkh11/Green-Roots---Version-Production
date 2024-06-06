@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Green Roots ....">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/buttonclick.css">
+  <script src="https://js.stripe.com/v3/"></script> <!-- Inclure Stripe.js -->
+  <title><%= title %></title>
+</head>
+
+<body>
+  <header class="header">
+    <img class="trans" src="3.png" alt="/">
+    <nav>
+      <ul class="list">
+        <li><a href="/" class="lien">ACCUEIL</a></li>
+        <li><a href="/catalog" class="lien">CATALOGUE D'ARBRES</a></li>
+        <li><a href="/campaign" class="lien">CAMPAGNES</a></li>
+        <li><a href="/cart" class="lien">Panier</a></li>
+            <% if (user) { %>
+            <li><a href="/profile"><i class="fas fa-user" id="profile-icon"></i></a></li>
+            <% } else { %>
+                <li><a href="/login" class="disconnected"><i class="fas fa-user"></i></a></li>
+                <% } %>
+          </ul>
+    </nav>
+  </header>

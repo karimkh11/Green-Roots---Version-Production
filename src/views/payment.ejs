@@ -1,0 +1,74 @@
+
+<%- include('partials/headeer') %>
+
+<h1>Page de Paiement</h1>
+<ul>
+    <% cart.forEach(item=> { %>
+        <li class="cart-item">
+            <img src="<%= encodeURI(item.image) %>" alt="<%= encodeURIComponent(item.name) %>">
+            <div class="details">
+                <span>Arbre: <%= item.name %></span>
+                <p>
+                    <%= item.description %>
+                </p>
+                <p><span>Prix: <%= item.price %> €</span></p>
+                <p><span>Quantité: <%= item.quantity %> </span></p>
+
+            </div>
+        </li>
+        <% }); %>
+</ul>
+    <h2>Total à payer: <%= totalAmount.toFixed(2) %> €</h2>
+    <div id="card-element"><!-- Élément Stripe ici --></div>
+    <form id="payment-form" action="/api/create_order" method="post">
+        
+        <button type="submit" id="submit-button">Payer</button>
+        <input type="hidden" id="payment-intent-id" name="payment-intent-id">
+    </form>
+   
+    <script>
+        var cartDetails = '<%- JSON.stringify(cartDetails) %>';
+        function calculateTotalAmount(cart) {
+           return cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+       }
+       
+       document.addEventListener('DOMContentLoaded', function () {
+    var stripe = Stripe('pk_test_51PN4gjP8eQuUoXdo3G4ixa6EU2JDLcrDID8K7TlDvChl1W5LlOOJEJNUxslmkXv8UkvwlGZuPO3jYBkgNJitPrNY008bRWr2CK');
+    var elements = stripe.elements();
+    var cardElement = elements.create('card');
+    cardElement.mount('#card-element');
+
+    var form = document.getElementById('payment-form');
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        stripe.createPaymentMethod({
+            type: 'card',
+            card: cardElement,
+            billing_details: {
+                // Ajoutez ici les détails de facturation si nécessaire
+            },
+        }).then(function(result) {
+            if (result.error) {
+                console.log(result.error.message);
+                alert(result.error.message);
+            } else {
+                fetch('/api/create_order', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ paymentMethodId: result.paymentMethod.id })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        window.location.href = `/order/${data.orderId}`;
+                    } else {
+                        alert('Erreur lors de la création de la commande.');
+                    }
+                });
+            }
+        });
+    });
+});
+</script>
+    
+

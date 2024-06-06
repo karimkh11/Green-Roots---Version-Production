@@ -1,0 +1,22 @@
+<%- include('partials/headeer') %>
+<div>
+<h2>Catalogue d'arbres</h2>
+<% for(const campaign of campaigns) { %>
+    <article>
+        <img src="<%= campaign.image %>" alt="<%= campaign.name %>">
+        <h3>
+            <%= campaign.name %>
+        </h3> <!-- Changement de p à h3 pour le nom de l'arbre -->
+        <p>
+            <%= campaign.description %>
+        </p>
+        <% for(const tree of campaign.trees) { %>
+      <!-- Lien dynamique vers la campagne -->
+        <p><%= tree.name %></p> <!-- Ajout de l'unité de monnaie -->
+        <% } %>
+        <a href="/panier/<%= campaign.treesId %>">Savoir plus</a> <!-- Lien dynamique vers le panier -->
+    </article>
+    <% } %>
+</div>
+        
+        <%- include('partials/footer') %>

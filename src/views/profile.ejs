@@ -1,0 +1,21 @@
+<%- include('partials/headeer') %>
+  <div class="container">
+    <h1>Mon profil</h1>
+    <div>
+      <p><strong>Prénom:</strong> <%= user.firstname %></p>
+      <p><strong>Nom:</strong> <%= user.lastname %></p>
+      <p><strong>Téléphone:</strong> <%= user.telephone %></p>
+      <p><strong>Ville:</strong> <%= user.locality %></p>
+      
+    </div>
+    <a href="orders" class="button">Mes Commandes</a>
+    <a href="/profile/edit" class="button">Modifier</a>
+    <form class="element_a" action="/logout" method="POST">
+      <button class="connected" type="submit">Déconnexion</button>
+    </form>
+  </div>
+  <!-- Ajoutez ceci à votre fichier profile.ejs -->
+
+</body>
+</html>
+

@@ -1,0 +1,113 @@
+<%- include('partials/headeer', { title: 'Titre de votre page' , user: user }) %>
+
+    <h1>Panier</h1>
+    <% if (errors && errors.length> 0) { %>
+        <div class="error-messages">
+            <% errors.forEach(function(error) { %>
+                <p style="color: red;">
+                    <%= error %>
+                </p>
+                <% }); %>
+        </div>
+        <% } %>
+
+            <% if (cart.length> 0) { %>
+                <ul>
+                    <% cart.forEach(item=> { %>
+                        <li class="cart-item">
+                            <img src="<%= encodeURI(item.image) %>" alt="<%= encodeURIComponent(item.name) %>">
+                            <div class="details">
+                                <span>Arbre: <%= item.name %></span>
+                                <p>
+                                    <%= item.description %>
+                                </p>
+                                <span>Prix: <%= item.price %> €</span>
+                                
+                                <span>Quantité:
+                                    <button onclick="changeQuantity('<%= item.tree_id %>', -1)">-</button>
+                                    <input id="quantity-<%= item.tree_id %>" type="text" value="<%= item.quantity %>"
+                                        readonly style="width: 40px; text-align: center;">
+                                    <button onclick="changeQuantity('<%= item.tree_id %>', 1)">+</button>
+                                </span>
+                            </div>
+                        </li>
+                        <% }); %>
+                </ul>
+
+                <div>
+                    <h2>Total à payer : <span id="total-amount">
+                            <%= (totalAmount / 100).toFixed(2) %> €
+                        </span></h2>
+                </div>
+
+                <% if (isLoggedIn) { %>
+                    <button onclick="window.location.href='/payment'">Procéder au paiement</button>
+                <% } else { %>
+                    <p><a href="/login">Connectez-vous</a> pour valider votre panier</p>
+                <% } %>
+            <% } else { %>
+                <p>Votre panier est vide.</p>
+            <% } %>
+            
+            <button onclick="clearCart()">Vider le panier</button>
+                                    <script>
+                                        // Script pour vider le panier et changer la quantité
+                                        function clearCart() {
+                                            fetch('/cart/clear', { method: 'POST' })
+                                                .then(response => {
+                                                    if (response.status === 204) {
+                                                        console.log('Panier vidé avec succès');
+                                                        window.location.reload();
+                                                    } else {
+                                                        console.error('Erreur lors de la suppression du panier :', response.statusText);
+                                                    }
+                                                })
+                                                .catch(error => console.error('Erreur lors de la suppression du panier :', error));
+                                        }
+
+                                        function changeQuantity(treeId, change) {
+                                            const input = document.querySelector(`#quantity-${treeId}`);
+                                            let currentQuantity = parseInt(input.value) + change;
+                                            if (currentQuantity >= 0) {
+                                                input.value = currentQuantity; // Met à jour l'affichage de la quantité
+
+                                                // Appel AJAX pour mettre à jour le panier
+                                                fetch(`/cart/update`, {
+                                                    method: 'POST',
+                                                    headers: {
+                                                        'Content-Type': 'application/json'
+                                                    },
+                                                    body: JSON.stringify({ treeId: treeId, quantity: currentQuantity })
+                                                })
+                                                    .then(response => response.json())
+                                                    .then(data => {
+                                                        if (data.success) {
+                                                            document.getElementById('total-amount').textContent = (data.newTotal / 100).toFixed(2) + ' €'; // Met à jour l'affichage du total
+                                                        } else {
+                                                            console.error('Erreur lors de la mise à jour du panier:', data.message);
+                                                        }
+                                                    })
+                                                    .catch(error => console.error('Erreur lors de la mise à jour du panier:', error));
+                                            }
+                                        }
+
+                                        function updateCart(treeId, quantity) {
+                                            fetch(`/cart/update`, {
+                                                method: 'POST',
+                                                headers: {
+                                                    'Content-Type': 'application/json'
+                                                },
+                                                body: JSON.stringify({ treeId: treeId, quantity: quantity })
+                                            })
+                                                .then(response => response.json())
+                                                .then(data => {
+                                                    if (data.success) {
+                                                        document.getElementById('total-amount').textContent = (data.newTotal / 100).toFixed(2) + ' €'; // Mise à jour de l'affichage du total
+                                                        console.log('Le panier a été mis à jour avec succès');
+                                                    } else {
+                                                        console.error('Erreur lors de la mise à jour du panier:', data.message);
+                                                    }
+                                                })
+                                                .catch(error => console.error('Erreur lors de la mise à jour du panier:', error));
+                                        }
+                                    </script>

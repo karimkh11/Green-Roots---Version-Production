@@ -1,0 +1,25 @@
+<%- include('partials/headeer') %>
+  <div class="container">
+    <h1>Modifier mon profil</h1>
+    <form action="/profile/edit" method="POST">
+      <div class="form-group">
+        <label for="firstname">Prénom</label>
+        <input type="text" id="firstname" name="firstname" value="<%= user.firstname %>" required>
+      </div>
+      <div class="form-group">
+        <label for="lastname">Nom</label>
+        <input type="text" id="lastname" name="lastname" value="<%= user.lastname %>" required>
+      </div>
+      <div class="form-group">
+        <label for="telephone">Téléphone</label>
+        <input type="tel" id="telephone" name="telephone" value="<%= user.telephone %>" required>
+      </div>
+      <div class="form-group">
+        <label for="locality">Ville</label>
+        <input type="text" id="locality" name="locality" value="<%= user.locality %>" required>
+      </div>
+      <button type="submit">Enregistrer les modifications</button>
+    </form>
+  </div>
+</body>
+</html>

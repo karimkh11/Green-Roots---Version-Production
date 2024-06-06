@@ -1,0 +1,28 @@
+<%- include('partials/headeer') %>
+
+<!-- orders.ejs -->
+
+
+<h1>Commandes</h1>
+<ul>
+    <% orders.forEach(order => { %>
+        <li>
+            <span>Commande n°: <%= order.id %></span>
+            <span>Date: <%= new Date(order.order_date).toLocaleDateString() %></span>
+            <span>Total: <%= order.total %> €</span>
+            <ul>
+                <% order.commandLines.forEach(commandLine => { %>
+                    <li>
+                        <span>Arbre: <%= commandLine.tree.name %></span>
+                        <span>Quantité: <%= commandLine.quantity %></span>
+                        <span>Total: <%= commandLine.commandline_total %> €</span>
+                    </li>
+                <% }); %>
+            </ul>
+        </li>
+    <% }); %>
+</ul>
+
+<%- include('partials/footer') %>
+</body>
+</html>
