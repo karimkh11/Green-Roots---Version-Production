@@ -5,8 +5,11 @@
 <p>Prix total: <%= order.total.toFixed(2) %> €</p>
 <ul>
     <% if (order.commandLines && order.commandLines.length > 0) { %>
+        <p>Date de la commande: <%= new Date(order.order_date).toLocaleDateString() %></p>
         <% order.commandLines.forEach(commandLine => { %>
-            <li><%= commandLine.tree.name %> - Quantité: <%= commandLine.quantity %></li>
+            
+            <li>Nom de produit: <%= commandLine.tree.name %></li>
+            <li>Quantité: <%= commandLine.quantity %></li>
             <li><img src="<%= encodeURI(commandLine.tree.image) %>" alt="<%= encodeURIComponent(commandLine.tree.name) %>"></li>
         <% }); %>
     <% } else { %>

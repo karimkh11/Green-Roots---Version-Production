@@ -12,7 +12,7 @@ export const isAdmin = (req, res, next) =>{
   // Assurez-vous que l'utilisateur est connecté
   if (!req.isAuthenticated()) {
     req.flash('error', 'Vous devez être connecté pour accéder à cette ressource.');
-    return res.redirect('/login');
+    return res.redirect('/admin');
   }
 
   // Vérifiez si l'utilisateur est un administrateur

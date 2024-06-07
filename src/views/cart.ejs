@@ -22,7 +22,7 @@
                                     <%= item.description %>
                                 </p>
                                 <span>Prix: <%= item.price %> €</span>
-                                
+
                                 <span>Quantité:
                                     <button onclick="changeQuantity('<%= item.tree_id %>', -1)">-</button>
                                     <input id="quantity-<%= item.tree_id %>" type="text" value="<%= item.quantity %>"
@@ -40,17 +40,32 @@
                         </span></h2>
                 </div>
 
-                <% if (isLoggedIn) { %>
-                    <button onclick="window.location.href='/payment'">Procéder au paiement</button>
-                <% } else { %>
-                    <p><a href="/login">Connectez-vous</a> pour valider votre panier</p>
-                <% } %>
-            <% } else { %>
-                <p>Votre panier est vide.</p>
-            <% } %>
-            
-            <button onclick="clearCart()">Vider le panier</button>
+                <% if (cart.length> 0 && cart.some(item => item.quantity > 0)) { %>
+                    <button onclick="window.location.href='/payment'" id="payment-button">Procéder au paiement</button>
+                    <% } %>
+                        
+                            <% } else { %>
+                                <p>Votre panier est vide.</p>
+                                <% } %>
+
+
+
+                                    <button onclick="clearCart()">Vider le panier</button>
                                     <script>
+                                        function updatePaymentButtonState() {
+                                            const allQuantities = Array.from(document.querySelectorAll('input[type="text"]'))
+                                                .map(input => parseInt(input.value, 10));
+                                            const isValid = allQuantities.some(quantity => quantity > 0);
+                                            const paymentButton = document.querySelector('button[onclick="window.location.href=\'/payment\'"]');
+                                           
+                                            if (paymentButton) {
+                                                paymentButton.disabled = !isValid;
+                                            }
+                                            if (noItemsMsg) {
+                                                noItemsMsg.style.display = isValid ? 'none' : 'block'; // Affiche ou cache le message selon la validité
+                                            }
+                                        }
+                                        document.addEventListener('DOMContentLoaded', updatePaymentButtonState);
                                         // Script pour vider le panier et changer la quantité
                                         function clearCart() {
                                             fetch('/cart/clear', { method: 'POST' })
@@ -68,28 +83,29 @@
                                         function changeQuantity(treeId, change) {
                                             const input = document.querySelector(`#quantity-${treeId}`);
                                             let currentQuantity = parseInt(input.value) + change;
-                                            if (currentQuantity >= 0) {
-                                                input.value = currentQuantity; // Met à jour l'affichage de la quantité
-
-                                                // Appel AJAX pour mettre à jour le panier
-                                                fetch(`/cart/update`, {
-                                                    method: 'POST',
-                                                    headers: {
-                                                        'Content-Type': 'application/json'
-                                                    },
-                                                    body: JSON.stringify({ treeId: treeId, quantity: currentQuantity })
+                                            if (currentQuantity < 0) currentQuantity = 0; // Assurez-vous que la quantité ne devienne pas négative
+                                            input.value = currentQuantity;
+                                            updateCart(treeId, currentQuantity); // Met à jour le panier sur le serveur
+                                            updatePaymentButtonState(); // Met à jour l'état du bouton de paiement
+                                            // Appel AJAX pour mettre à jour le panier
+                                            fetch(`/cart/update`, {
+                                                method: 'POST',
+                                                headers: {
+                                                    'Content-Type': 'application/json'
+                                                },
+                                                body: JSON.stringify({ treeId: treeId, quantity: currentQuantity })
+                                            })
+                                                .then(response => response.json())
+                                                .then(data => {
+                                                    if (data.success) {
+                                                        document.getElementById('total-amount').textContent = (data.newTotal / 100).toFixed(2) + ' €'; // Met à jour l'affichage du total
+                                                    } else {
+                                                        console.error('Erreur lors de la mise à jour du panier:', data.message);
+                                                    }
                                                 })
-                                                    .then(response => response.json())
-                                                    .then(data => {
-                                                        if (data.success) {
-                                                            document.getElementById('total-amount').textContent = (data.newTotal / 100).toFixed(2) + ' €'; // Met à jour l'affichage du total
-                                                        } else {
-                                                            console.error('Erreur lors de la mise à jour du panier:', data.message);
-                                                        }
-                                                    })
-                                                    .catch(error => console.error('Erreur lors de la mise à jour du panier:', error));
-                                            }
+                                                .catch(error => console.error('Erreur lors de la mise à jour du panier:', error));
                                         }
+
 
                                         function updateCart(treeId, quantity) {
                                             fetch(`/cart/update`, {
@@ -110,4 +126,5 @@
                                                 })
                                                 .catch(error => console.error('Erreur lors de la mise à jour du panier:', error));
                                         }
+
                                     </script>

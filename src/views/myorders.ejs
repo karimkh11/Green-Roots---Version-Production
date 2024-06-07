@@ -1,0 +1,16 @@
+<h1>Mes Commandes</h1>
+<ul>
+    <% orders.forEach(order => { %>
+        <li>
+            <h2>Commande N°<%= order.id %>, Passée le: <%= new Date(order.createdAt).toLocaleDateString() %></h2>
+            <% order.commandLines.forEach(line => { %>
+                <div>
+                    <p>Arbre: <%= line.tree.name %> (Campagne: <%= line.tree.campaign.name %>)</p>
+                    <p>Quantité: <%= line.quantity %></p>
+                    <p>Prix: <%= line.price.toFixed(2) %> €</p>
+                </div>
+            <% }); %>
+            <p>Status: <%= order.status %></p>
+        </li>
+    <% }); %>
+</ul>

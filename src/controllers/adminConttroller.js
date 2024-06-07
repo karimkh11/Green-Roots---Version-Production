@@ -15,8 +15,8 @@ const adminController = {
   } catch (error) {
     // Gérer les erreurs
     console.error('Erreur lors de la récupération des informations de l\'utilisateur :', error);
-    res.redirect('/login');
-    //res.status(500).send('Erreur lors de la récupération des informations de l\'utilisateur');
+    res.redirect('home');
+    res.status(500).send('Erreur lors de la récupération des informations de l\'utilisateur');
   }
 },
 manageAccounts: (req, res) => {

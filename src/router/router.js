@@ -10,6 +10,7 @@ import * as cartController from '../controllers/cartController.js';
 import  { createPaymentIntent, detailController, paymentController } from '../controllers/paymentController.js'
 import { getOrders, validateOrder, getOrderPage, getValidatedOrders, updateOrderStatus } from '../controllers/ordersController.js';
 import { isLoggedIn, isAdmin } from '../middleware/authMiddleware.js';
+import { suiviCommande } from '../controllers/suiviController.js';
 
 const router = express.Router();
 
@@ -23,7 +24,7 @@ router.get('/cart', cartController.getCart);
 // Route pour ajouter un arbre au panier
 router.post('/cart/add', cartController.addToCart);
 
-router.get('/payment', paymentController);
+router.get('/payment', isLoggedIn, paymentController);
 router.get('/order/:orderId', detailController);
 router.post('/api/create_order', createPaymentIntent);
 
@@ -63,6 +64,7 @@ router.post('/uploadTreeImage', gestionController.uploadController);
 
 router.get('/profile',isLoggedIn, profileController.getProfile);
 router.get('/profile/edit', isLoggedIn, profileController.getEditProfile);
+router.get('/myorders', isLoggedIn, suiviCommande);
 router.post('/profile/edit', isLoggedIn, profileController.updateProfile);
 // Route de déconnexion
 router.post('/logout', profileController.logout);
