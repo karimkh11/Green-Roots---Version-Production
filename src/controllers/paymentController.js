@@ -126,7 +126,7 @@ export const createPaymentIntent = async (req, res) => {
             user_id: req.user.id,  // Assumer que l'ID de l'utilisateur est stocké dans la session
             order_date: new Date(),
             paid: true,  // Ici on suppose que le paiement a été effectué avec succès
-            status: 'pending',
+            status: 'En attente',
             total: total
         });
         // Création des lignes de commande

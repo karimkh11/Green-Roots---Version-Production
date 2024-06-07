@@ -9,6 +9,7 @@ function calculateTotalAmount(cart) {
 
 // Fonction pour récupérer le contenu du panier
 export const getCart = async (req, res) => {
+    
     const cart = JSON.parse(req.session.cart || '[]');
     const totalAmount = calculateTotalAmount(cart); // Calcul en centimes pour Stripe
     let clientSecret = null;
@@ -144,7 +145,7 @@ export const checkout = async (req, res) => {
             user_id: req.user.id,
             order_date: new Date(),
             paid: 'payé',
-            status: 'pending',
+            status: 'En attente',
             total: cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
         });
 

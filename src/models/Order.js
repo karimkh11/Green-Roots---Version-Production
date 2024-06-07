@@ -25,7 +25,7 @@ Order.init({
     },
     status: {
       type: DataTypes.STRING,
-      allowNull: false
+      defaultValue: 'En attente'
     },
     total: {
       type: DataTypes.INTEGER,

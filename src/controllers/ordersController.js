@@ -28,7 +28,7 @@ import { Op } from 'sequelize';
   export const getOrderPage = async (req, res) => {
     try {
         const { email } = req.query;  // Récupère l'email de la requête pour filtrer
-        let whereClause =  { status: 'pending' };
+        let whereClause =  { status: 'En attente' };
         
         if (email) {
             const user = await User.findOne({ where: { email } });
@@ -93,7 +93,7 @@ export const getValidatedOrders = async (req, res) => {
   try {
       const { email } = req.query;
       let whereClause = {
-        status: { [Op.ne]: 'pending' }  // Utilise Op.ne pour exclure 'pending'
+        status: { [Op.ne]: 'En attente' }  // Utilise Op.ne pour exclure 'pending'
     };
 
       if (email) {

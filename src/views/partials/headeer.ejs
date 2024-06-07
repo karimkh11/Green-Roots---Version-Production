@@ -21,11 +21,15 @@
         <li><a href="/catalog" class="lien">CATALOGUE D'ARBRES</a></li>
         <li><a href="/campaign" class="lien">CAMPAGNES</a></li>
         <li><a href="/cart" class="lien">Panier</a></li>
-            <% if (user) { %>
+        <% if (user) { %>
+          <% if (user.role === 'admin') { %>
+            <li><a href="/admin"><i class="fas fa-user" id="profile-icon"></i></a></li>
+          <% } else if (user.role === 'user') { %>
             <li><a href="/profile"><i class="fas fa-user" id="profile-icon"></i></a></li>
-            <% } else { %>
-                <li><a href="/login" class="disconnected"><i class="fas fa-user"></i></a></li>
-                <% } %>
-          </ul>
+          <% } %>
+        <% } else { %>
+          <li><a href="/login" class="disconnected"><i class="fas fa-user"></i> Login</a></li>
+        <% } %>
+      </ul>
     </nav>
   </header>
