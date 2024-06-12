@@ -61,8 +61,8 @@ router.post('/admin/create-account', isAdmin, adminController.createAccount);
 router.get('/createCampaign', isAdmin, createCampaign);
 router.post('/campaigns', isAdmin, formCampaign);
 // Route POST pour gérer l'upload d'image (accessible uniquement aux administrateurs)
-router.get('/add-tree', gestionController.getAddTreeForm);
-router.post('/add-tree', gestionController.addTree);
+router.get('/add-tree', isAdmin, gestionController.getAddTreeForm);
+router.post('/add-tree', isAdmin, gestionController.addTree);
 
 router.get('/profile',isLoggedIn, profileController.getProfile);
 router.get('/profile/edit', isLoggedIn, profileController.getEditProfile);
