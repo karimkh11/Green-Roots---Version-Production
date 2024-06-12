@@ -35,19 +35,19 @@ CREATE TABLE "campaign" (
 
 
 CREATE TABLE "tree" (
-"id" INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-"campaign_id" INTEGER REFERENCES "campaign"("id") NOT NULL,
-"user_id" INTEGER REFERENCES "user"("id") NOT NULL,
-"name" TEXT NOT NULL,
-"description" TEXT NOT NULL,
-"image" TEXT,
-"price" NUMERIC,
-"date_of_purchase" DATE NOT NULL,
-"status" TEXT NOT NULL,
-"planting_date" DATE NOT NULL,
-"gps_coordinates" POINT,
-"createdAt" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-"updatedAt" TIMESTAMPTZ 
+    "id" INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    "campaign_id" INTEGER REFERENCES "campaign"("id") NOT NULL,
+    "user_id" INTEGER REFERENCES "user"("id"),
+    "name" TEXT NOT NULL,
+    "description" TEXT NOT NULL,
+    "image" TEXT,
+    "price" NUMERIC,
+    "date_of_purchase" DATE,
+    "status" TEXT,
+    "planting_date" DATE,
+    "gps_coordinates"  GEOMETRY(POINT),
+    "createdAt" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    "updatedAt" TIMESTAMPTZ
 );
 
 CREATE TABLE "orders" (

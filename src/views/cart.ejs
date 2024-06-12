@@ -1,56 +1,47 @@
 <%- include('partials/headeer', { title: 'Titre de votre page' , user: user }) %>
 
-    <h1>Panier</h1>
-    <% if (errors && errors.length> 0) { %>
-        <div class="error-messages">
-            <% errors.forEach(function(error) { %>
-                <p style="color: red;">
-                    <%= error %>
-                </p>
-                <% }); %>
-        </div>
-        <% } %>
+<h1 class="panier-title">Panier</h1>
 
-            <% if (cart.length> 0) { %>
-                <ul>
-                    <% cart.forEach(item=> { %>
-                        <li class="cart-item">
-                            <img src="<%= encodeURI(item.image) %>" alt="<%= encodeURIComponent(item.name) %>">
-                            <div class="details">
-                                <span>Arbre: <%= item.name %></span>
-                                <p>
-                                    <%= item.description %>
-                                </p>
-                                <span>Prix: <%= item.price %> €</span>
+<% if (errors && errors.length > 0) { %>
+    <div class="error-messages">
+        <% errors.forEach(function(error) { %>
+            <p><%= error %></p>
+        <% }); %>
+    </div>
+<% } %>
 
-                                <span>Quantité:
-                                    <button onclick="changeQuantity('<%= item.tree_id %>', -1)">-</button>
-                                    <input id="quantity-<%= item.tree_id %>" type="text" value="<%= item.quantity %>"
-                                        readonly style="width: 40px; text-align: center;">
-                                    <button onclick="changeQuantity('<%= item.tree_id %>', 1)">+</button>
-                                </span>
-                            </div>
-                        </li>
-                        <% }); %>
-                </ul>
+<% if (cart.length > 0) { %>
+    <ul class="panier-list">
+        <% cart.forEach(item => { %>
+            <li class="cart-item">
+                <img src="<%= encodeURI(item.image) %>" alt="<%= encodeURIComponent(item.name) %>">
+                <div class="details">
+                    <span>Arbre: <%= item.name %></span>
+                    <p><%= item.description %></p>
+                    <span>Prix: <%= item.price %> €</span>
 
-                <div>
-                    <h2>Total à payer : <span id="total-amount">
-                            <%= (totalAmount / 100).toFixed(2) %> €
-                        </span></h2>
+                    <div class="quantity">
+                        <button onclick="changeQuantity('<%= item.tree_id %>', -1)">-</button>
+                        <input id="quantity-<%= item.tree_id %>" type="text" value="<%= item.quantity %>" readonly>
+                        <button onclick="changeQuantity('<%= item.tree_id %>', 1)">+</button>
+                    </div>
                 </div>
+            </li>
+        <% }); %>
+    </ul>
 
-                <% if (cart.length> 0 && cart.some(item => item.quantity > 0)) { %>
-                    <button onclick="window.location.href='/payment'" id="payment-button">Procéder au paiement</button>
-                    <% } %>
-                        
-                            <% } else { %>
-                                <p>Votre panier est vide.</p>
-                                <% } %>
+    <div class="total-amount">
+        <h2>Total à payer : <span id="total-amount"><%= (totalAmount / 100).toFixed(2) %> €</span></h2>
+    </div>
 
+    <% if (cart.length > 0 && cart.some(item => item.quantity > 0)) { %>
+        <button onclick="window.location.href='/payment'" id="payment-button">Procéder au paiement</button>
+    <% } %>
+<% } else { %>
+    <p>Votre panier est vide.</p>
+<% } %>
 
-
-                                    <button onclick="clearCart()">Vider le panier</button>
+<button onclick="clearCart()" class="clear-cart-button">Vider le panier</button>
                                     <script>
                                         function updatePaymentButtonState() {
                                             const allQuantities = Array.from(document.querySelectorAll('input[type="text"]'))

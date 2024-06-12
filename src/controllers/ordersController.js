@@ -74,7 +74,7 @@ import { Op } from 'sequelize';
 export const validateOrder = async (req, res) => {
   try {
       const { orderId } = req.params;
-      const [updatedCount] = await Order.update({ status: 'Validée' }, { where: { id: orderId } });
+      const [updatedCount] = await Order.update({ status: 'validated' }, { where: { id: orderId } });
       console.log('Updated count:', updatedCount);
 
       if (updatedCount > 0) {

@@ -1,0 +1,39 @@
+<%- include('partials/headeer') %>
+
+<style>
+select {
+    min-width: 200px; /* Assure une largeur minimale pour le select */
+    padding: 8px; /* Ajoute un peu de padding pour la lisibilité */
+}
+
+option {color: black;
+    padding: 4px; /* Padding pour rendre les options plus accessibles */
+    font-size: 16px; /* Assure une taille de police suffisante pour la lisibilité */
+}
+</style>
+
+<h1 class="creer-campagne-title">Créer une Nouvelle Campagne</h1>
+<form class="creer-campagne-form" method="post" action="/campaigns">
+    <label for="name">Nom de la campagne:</label>
+    <input type="text" id="name" name="name" required><br>
+
+    <label for="image">URL de l'image (facultatif):</label>
+    <input type="text" id="image" name="image"><br>
+
+    <label for="description">Description:</label>
+    <textarea id="description" name="description" required></textarea><br>
+
+    <label for="userId">Attribuer à l'utilisateur (Partner):</label>
+    <select id="userId" name="userId" required>
+        <% if (partners && partners.length > 0) { %>
+            <% partners.forEach(partner => { %>
+                <option value="<%= partner.id %>"><%= partner.lastname %></option>
+            <% }); %>
+        <% } else { %>
+            <option>Aucun partenaire disponible</option>
+        <% } %>
+    </select><br>
+
+    <button type="submit">Créer</button>
+</form>
+</body>

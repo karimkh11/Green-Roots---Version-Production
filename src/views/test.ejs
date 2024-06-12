@@ -1,112 +1,75 @@
-<%- include('partials/headeer', { title: 'Titre de votre page' , user: user }) %>
+<h1>Suivi des Arbres Validés</h1>
+<div>
+    <label for="search">Rechercher un arbre:</label>
+    <input type="text" id="search" placeholder="Nom de l'arbre" value="<%= searchQuery %>">
+    <button id="searchButton">Rechercher</button>
 
-    <h1>Panier</h1>
-    <% if (errors && errors.length> 0) { %>
-        <div class="error-messages">
-            <% errors.forEach(function(error) { %>
-                <p style="color: red;">
-                    <%= error %>
-                </p>
-                <% }); %>
-        </div>
-        <% } %>
-
-            <% if (cart.length> 0) { %>
-                <ul>
-                    <% cart.forEach(item=> { %>
-                        <li class="cart-item">
-                            <img src="<%= encodeURI(item.image) %>" alt="<%= encodeURIComponent(item.name) %>">
-                            <div class="details">
-                                <span>Arbre: <%= item.name %> (ID: <%= item.tree_id %>)</span>
-                                <p>
-                                    <%= item.description %>
-                                </p>
-                                <span>Prix: <%= item.price %> €</span>
-                                <span>Quantité:
-                                    <button onclick="changeQuantity('<%= item.tree_id %>', -1)">-</button>
-                                    <input id="quantity-<%= item.tree_id %>" type="text" value="<%= item.quantity %>"
-                                        readonly style="width: 40px; text-align: center;">
-                                    <button onclick="changeQuantity('<%= item.tree_id %>', 1)">+</button>
-                                </span>
-                            </div>
-                        </li>
-                        <% }); %>
-                </ul>
-
-                <div>
-                    <h2>Total à payer : <span id="total-amount">
-                            <%= (totalAmount / 100).toFixed(2) %> €
-                        </span></h2>
-                </div>
-
-                <% if (isLoggedIn) { %>
-                    <button onclick="window.location.href='/payment'">Procéder au paiement</button>
-                <% } else { %>
-                    <p><a href="/login">Connectez-vous</a> pour valider votre panier</p>
-                <% } %>
+</div>
+<ul id="treeList">
+    <% trees.forEach(tree => { %>
+        <li data-lat="<%= tree.gps_coordinates.lat %>" data-lng="<%= tree.gps_coordinates.lng %>">
+            <h2>Commande N°<%= tree.orderId %> - Passée le: <%= new Date(tree.orderDate).toLocaleDateString() %></h2>
+            <p>Nom de l'arbre: <%= tree.name %></p>
+            <p>Campagne: <%= tree.campaignName %></p>
+            <p>Statut: <%= tree.status %></p>
+            <p>Numéro du partenaire: <%= tree.partnerPhone %></p>
+            <% if (tree.gps_coordinates) { %>
+                <p>GPS: Lat <%= tree.gps_coordinates.lat %>, Lng <%= tree.gps_coordinates.lng %></p>
             <% } else { %>
-                <p>Votre panier est vide.</p>
+                <p>GPS: Non disponible</p>
             <% } %>
-            
-            <button onclick="clearCart()">Vider le panier</button>
-                                    <script>
-                                        // Script pour vider le panier et changer la quantité
-                                        function clearCart() {
-                                            fetch('/cart/clear', { method: 'POST' })
-                                                .then(response => {
-                                                    if (response.status === 204) {
-                                                        console.log('Panier vidé avec succès');
-                                                        window.location.reload();
-                                                    } else {
-                                                        console.error('Erreur lors de la suppression du panier :', response.statusText);
-                                                    }
-                                                })
-                                                .catch(error => console.error('Erreur lors de la suppression du panier :', error));
-                                        }
+        </li>
+    <% }); %>
+</ul>
 
-                                        function changeQuantity(treeId, change) {
-                                            const input = document.querySelector(`#quantity-${treeId}`);
-                                            let currentQuantity = parseInt(input.value) + change;
-                                            if (currentQuantity >= 0) {
-                                                input.value = currentQuantity; // Met à jour l'affichage de la quantité
+<div id="map"></div>
 
-                                                // Appel AJAX pour mettre à jour le panier
-                                                fetch(`/cart/update`, {
-                                                    method: 'POST',
-                                                    headers: {
-                                                        'Content-Type': 'application/json'
-                                                    },
-                                                    body: JSON.stringify({ treeId: treeId, quantity: currentQuantity })
-                                                })
-                                                    .then(response => response.json())
-                                                    .then(data => {
-                                                        if (data.success) {
-                                                            document.getElementById('total-amount').textContent = (data.newTotal / 100).toFixed(2) + ' €'; // Met à jour l'affichage du total
-                                                        } else {
-                                                            console.error('Erreur lors de la mise à jour du panier:', data.message);
-                                                        }
-                                                    })
-                                                    .catch(error => console.error('Erreur lors de la mise à jour du panier:', error));
-                                            }
-                                        }
 
-                                        function updateCart(treeId, quantity) {
-                                            fetch(`/cart/update`, {
-                                                method: 'POST',
-                                                headers: {
-                                                    'Content-Type': 'application/json'
-                                                },
-                                                body: JSON.stringify({ treeId: treeId, quantity: quantity })
-                                            })
-                                                .then(response => response.json())
-                                                .then(data => {
-                                                    if (data.success) {
-                                                        document.getElementById('total-amount').textContent = (data.newTotal / 100).toFixed(2) + ' €'; // Mise à jour de l'affichage du total
-                                                        console.log('Le panier a été mis à jour avec succès');
-                                                    } else {
-                                                        console.error('Erreur lors de la mise à jour du panier:', data.message);
-                                                    }
-                                                })
-                                                .catch(error => console.error('Erreur lors de la mise à jour du panier:', error));
-                                        }
-                                    </script>
+
+<script>
+   document.addEventListener('DOMContentLoaded', function() {
+    let map;
+    function initMap() {
+        map = L.map('map').setView([48.8566, 2.3522], 13);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+        
+        <% trees.forEach(tree => { %>
+            if (tree.gps_coordinates) {
+                let marker = L.marker([<%= tree.gps_coordinates.lat %>, <%= tree.gps_coordinates.lng %>]).addTo(map);
+                marker.bindPopup("Nom: <%= tree.name %><br>Campagne: <%= tree.campaignName %><br>Statut: <%= tree.status %>");
+            }
+        <% }); %>
+    }
+
+    function showTreeOnMap(lat, lng) {
+    if (map) {
+        map.setView([lat, lng], 16); // Ajuste le zoom selon tes besoins
+    }
+}
+
+
+    function searchTrees() {
+        const searchValue = document.getElementById('search').value;
+        window.location.href = `/validated-trees?search=${searchValue}`;
+    }
+
+    document.getElementById('searchButton').addEventListener('click', searchTrees);
+
+    initMap();
+});
+document.addEventListener('DOMContentLoaded', function() {
+    const treeItems = document.querySelectorAll('#treeList li');
+    treeItems.forEach(item => {
+        item.addEventListener('click', function() {
+            const lat = this.getAttribute('data-lat');
+            const lng = this.getAttribute('data-lng');
+            showTreeOnMap(lat, lng);
+        });
+    });
+});
+
+</script>
+</body>
+</html>

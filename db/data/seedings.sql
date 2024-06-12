@@ -33,14 +33,16 @@ INSERT INTO "campaign" (user_id, name, description, image) VALUES
 
 -- Insérer des arbres
 INSERT INTO "tree" (campaign_id, user_id, name, description, image, price, date_of_purchase, status, planting_date, gps_coordinates) VALUES
-(1, 1, 'Chene', 'Un chene magnifique et fort', 'https://res.cloudinary.com/dg2qhwbkt/image/upload/c_fill,w_600,h_600,ar_1:1/v1716432096/pexels-tobiasbjorkli-2360670_bputsr.jpg', 20.00, '2021-01-01', 'Planted', '2021-02-01', '(49.1805, 1.8989)'),
-(2, 2, 'Erable', 'Un erable a sucre robuste', 'https://res.cloudinary.com/dg2qhwbkt/image/upload/c_fill,w_600,h_600,ar_1:1/v1716432413/pexels-photo-12345930_rkiwfr.jpg', 15.00, '2021-01-01', 'Planted', '2021-03-01', '(49.1805, 1.8989)'),
-(3, 3, 'Sapin', 'Le sapin est un genre de plantes vivaces', 'https://res.cloudinary.com/dg2qhwbkt/image/upload/c_fill,w_600,h_600,ar_1:1/v1716432096/pexels-tobiasbjorkli-2360670_bputsr.jpg', 20.00, '2021-01-01', 'Planted', '2021-02-01', '(49.1805, 1.8989)'),
-(4, 4, 'Baobab', 'Un arbre tres distinctif avec un tronc massif et renfle', 'https://res.cloudinary.com/dg2qhwbkt/image/upload/c_fill,w_600,h_600,ar_1:1/v1716432413/pexels-photo-12345930_rkiwfr.jpg', 15.00, '2021-01-01', 'Planted', '2021-03-01', '(49.1805, 1.8989)'),
-(5, 5, 'Ficus', 'Le ficus est un genre botanique relevant de la famille des Moraceae', 'https://res.cloudinary.com/dg2qhwbkt/image/upload/c_fill,w_600,h_600,ar_1:1/v1716432096/pexels-tobiasbjorkli-2360670_bputsr.jpg', 20.00, '2021-01-01', 'Planted', '2021-02-01', '(49.1805, 1.8989)'),
-(6, 6, 'Catalpa', 'Genre botanique de plantes fleuries de la famille des Bignoniaceae', 'https://res.cloudinary.com/dg2qhwbkt/image/upload/c_fill,w_600,h_600,ar_1:1/v1716432413/pexels-photo-12345930_rkiwfr.jpg', 15.00, '2021-01-01', 'Planted', '2021-03-01', '(49.1805, 1.8989)'),
-(7, 7, 'Alnus', 'Genre botanique d’arbres et arbustes relevant de la famille des Betulaceae', 'https://res.cloudinary.com/dg2qhwbkt/image/upload/c_fill,w_600,h_600,ar_1:1/v1716432096/pexels-tobiasbjorkli-2360670_bputsr.jpg', 20.00, '2021-01-01', 'Planted', '2021-02-01', '(49.1805, 1.8989)'),
-(8, 8, 'Olivier', 'Un arbre emblematique mediterraneen, souvent associe a la paix et a la sagesse', 'https://res.cloudinary.com/dg2qhwbkt/image/upload/c_fill,w_600,h_600,ar_1:1/v1716432413/pexels-photo-12345930_rkiwfr.jpg', 15.00, '2021-01-01', 'Planted', '2021-03-01', '(49.1805, 1.8989)');
+(1, 1, 'Chene', 'Un chene magnifique et fort', 'https://res.cloudinary.com/dg2qhwbkt/image/upload/c_fill,w_600,h_600,ar_1:1/v1716432096/pexels-tobiasbjorkli-2360670_bputsr.jpg', 20.00, '2021-01-01', 'Planted', '2021-02-01', ST_SetSRID(ST_Point(2.6980, 48.4047), 4326)),
+(2, 2, 'Erable', 'Un erable a sucre robuste', 'https://res.cloudinary.com/dg2qhwbkt/image/upload/c_fill,w_600,h_600,ar_1:1/v1716432413/pexels-photo-12345930_rkiwfr.jpg', 15.00, '2021-01-01', 'Planted', '2021-03-01', ST_SetSRID(ST_Point(2.9116, 49.4179), 4326)),
+(3, 3, 'Sapin', 'Le sapin est un genre de plantes vivaces', 'https://res.cloudinary.com/dg2qhwbkt/image/upload/c_fill,w_600,h_600,ar_1:1/v1716432096/pexels-tobiasbjorkli-2360670_bputsr.jpg', 20.00, '2021-01-01', 'En attente', '2021-02-01', ST_SetSRID(ST_Point(7.1347, 48.2308), 4326)),
+(4, 4, 'Baobab', 'Un arbre tres distinctif avec un tronc massif et renfle', 'https://res.cloudinary.com/dg2qhwbkt/image/upload/c_fill,w_600,h_600,ar_1:1/v1716432413/pexels-photo-12345930_rkiwfr.jpg', 15.00, '2021-01-01', 'validated', '2021-03-01', ST_SetSRID(ST_Point(7.2619, 43.7102), 4326)),
+(5, 5, 'Ficus', 'Le ficus est un genre botanique relevant de la famille des Moraceae', 'https://res.cloudinary.com/dg2qhwbkt/image/upload/c_fill,w_600,h_600,ar_1:1/v1716432096/pexels-tobiasbjorkli-2360670_bputsr.jpg', 20.00, '2021-01-01', 'Planted', '2021-02-01', ST_SetSRID(ST_Point(5.3698, 43.2965), 4326)),
+(6, 6, 'Catalpa', 'Genre botanique de plantes fleuries de la famille des Bignoniaceae', 'https://res.cloudinary.com/dg2qhwbkt/image/upload/c_fill,w_600,h_600,ar_1:1/v1716432413/pexels-photo-12345930_rkiwfr.jpg', 15.00, '2021-01-01', 'Planted', '2021-03-01', ST_SetSRID(ST_Point(-2.2833, 48.01), 4326)),
+(7, 7, 'Alnus', 'Genre botanique d’arbres et arbustes relevant de la famille des Betulaceae', 'https://res.cloudinary.com/dg2qhwbkt/image/upload/c_fill,w_600,h_600,ar_1:1/v1716432096/pexels-tobiasbjorkli-2360670_bputsr.jpg', 20.00, '2021-01-01', 'Planted', '2021-02-01', ST_SetSRID(ST_Point(2.0492, 47.9025), 4326)),
+(8, 8, 'Olivier', 'Un arbre emblematique mediterraneen, souvent associe a la paix et a la sagesse', 'https://res.cloudinary.com/dg2qhwbkt/image/upload/c_fill,w_600,h_600,ar_1:1/v1716432413/pexels-photo-12345930_rkiwfr.jpg', 15.00, '2021-01-01', 'Planted', '2021-03-01', ST_SetSRID(ST_Point(4.8055, 43.9493), 4326));
+
+
 
 
  COMMIT;

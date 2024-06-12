@@ -1,57 +1,53 @@
-import { v2 as cloudinary } from 'cloudinary';
+//import { v2 as cloudinary } from 'cloudinary';
 import {User, Tree, Campaign } from '../models/index.js'; // Assurez-vous que le chemin est correct
+import sequelize from '../database/database.js';
 
 const gestionController = {
-  uploadTreeImageController: async (req, res) => {
+  getAddTreeForm: async (req, res) => {
     const title = 'Formulaire d\'upload d\'image'; // Titre de la page
     const user = req.user; // Utilisateur actuellement connecté (le cas échéant)
 
     try {
       const campaigns = await Campaign.findAll();
-      const users = await User.findAll({
-        where: {
-          role: 'Partenaire' // Filtrer pour obtenir uniquement les utilisateurs avec le rôle 'partenaire'
-        }
-      });
-
-      res.render('uploadTreeImageForm', { title, user, campaigns, users });
-    } catch (error) {
-      console.error(error);
-      res.status(500).send('Erreur lors du chargement des campagnes et des utilisateurs.');
+      res.render('addTree', { campaigns, title, user });
+  } catch (error) {
+      console.error('Erreur lors de la récupération des campagnes:', error);
+      res.status(500).send('Erreur interne du serveur');
     }
   },
 
-  uploadController: async (req, res) => {
+  addTree: async (req, res) => {
+
+    const { campaignId, name, description, image, price, latitude, longitude } = req.body;
+
     try {
-      // Téléchargement de l'image sur Cloudinary
-      const uploadResult = await cloudinary.uploader.upload(req.body.imageUrl, {
-        public_id: req.body.publicId
-      });
-  
-      // Récupérer la campagne par ID pour obtenir le nom de l'organisation
-      const campaign = await Campaign.findByPk(req.body.campaign_id);
-      if (!campaign) {
-        return res.status(404).json({ error: 'Campaign not found' });
-      }
-  
-      // Création d'un nouvel arbre avec l'URL de l'image téléchargée et le nom de l'organisation de la campagne
-      const newTree = await Tree.create({
-        campaign_id: req.body.campaign_id,
-        user_id: req.body.user_id,
-        name: req.body.name,
-        description: `${req.body.description} - Organization: ${campaign.nameOfOrganization}`,
-        image: uploadResult.secure_url, // URL de l'image téléchargée
-        price: req.body.price,
-        date_of_purchase: req.body.date_of_purchase,
-        status: req.body.status,
-        planting_date: req.body.planting_date,
-        gps_coordinates: req.body.gps_coordinates
-      });
-  
-      res.json(newTree);
+        // Récupérer la campagne pour obtenir l'ID de l'utilisateur associé
+        const campaign = await Campaign.findByPk(campaignId, {
+            include: [{
+                model: User, // Assurez-vous que le modèle User est importé et correctement associé
+                as: 'user'  // Correspond à l'alias défini dans l'association
+            }]
+        });
+
+        if (!campaign) {
+            return res.status(404).send('Campagne non trouvée');
+        }
+
+        // Création de l'arbre avec l'userId du propriétaire de la campagne
+        const tree = await Tree.create({
+            campaign_id: campaignId,
+            user_id: campaign.user.id,  // Utiliser l'ID de l'utilisateur associé à la campagne
+            name: name,
+            description: description,
+            image: image,
+            price: price,
+            gps_coordinates: sequelize.fn('ST_SetSRID', sequelize.fn('ST_Point', longitude, latitude), 4326)
+        });
+      console.log(tree);
+        res.redirect('/admin');
     } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Failed to upload image and create tree' });
+        console.error('Erreur lors de l\'ajout de l\'arbre:', error);
+        res.status(500).send('Erreur interne du serveur');
     }
   },
 };

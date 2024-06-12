@@ -1,0 +1,70 @@
+<%- include('partials/headeer') %>
+
+<h1 class="suivi-arbres-title">Suivi des Arbres</h1>
+    <div class="suivi-arbres-container">
+        <label class="suivi-arbres-label" for="search">Rechercher un arbre:</label>
+        <input class="suivi-arbres-input" type="text" id="search" placeholder="Nom de l'arbre" value="<%= searchQuery %>">
+        <button class="suivi-arbres-button" id="searchButton">Rechercher</button>
+    </div>
+    <div class="suivi">
+    <ul id="treeList" class="suivi-arbres-list">
+        <% trees.forEach(tree => { %>
+            <li class="suivi-arbres-item" data-lat="<%= tree.gps_coordinates.lat %>" data-lng="<%= tree.gps_coordinates.lng %>"
+                onclick="showTreeOnMap(<%= tree.gps_coordinates.lat %>, <%= tree.gps_coordinates.lng %>)">
+                <h2 class="suivi-arbres-item-title">Commande N°<%= tree.orderId %> - Passée le: <%= new Date(tree.orderDate).toLocaleDateString() %></h2>
+                <p class="suivi-arbres-item-text">Nom de l'arbre: <%= tree.name %></p>
+                <p class="suivi-arbres-item-text">Campagne: <%= tree.campaignName %></p>
+                <p class="suivi-arbres-item-text">Statut: <%= tree.status %></p>
+                <p class="suivi-arbres-item-text">Numéro du partenaire: <%= tree.partnerPhone %></p>
+                <% if (tree.gps_coordinates) { %>
+                    <p class="suivi-arbres-item-text">GPS: Lat <%= tree.gps_coordinates.lat %>, Lng <%= tree.gps_coordinates.lng %></p>
+                <% } else { %>
+                    <p class="suivi-arbres-item-text">GPS: Non disponible</p>
+                <% } %>
+            </li>
+        <% }); %>
+    </ul>
+
+<div id="map" style="height: 400px;"></div>
+</div>
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<script>
+    let map;
+    function initMap() {
+        map = L.map('map').setView([48.8566, 2.3522], 13);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // URL de ton icône d'arbre
+        const treeIconUrl = 'https://res.cloudinary.com/dg2qhwbkt/image/upload/v1718145380/5982136_camping_forest_holidays_nature_tools_icon_1_mgp5hm.png';
+        const treeIcon = L.icon({
+            iconUrl: treeIconUrl,
+            iconSize: [40, 50], // Définit la taille de l'icône
+            iconAnchor: [15, 30], // Point de l'icône utilisé pour la correspondance exacte avec la position géographique
+            popupAnchor: [0, -30] // Point d'ancrage du popup par rapport à l'icône
+        });
+
+        // Appliquer l'icône personnalisée à tous les marqueurs générés par la boucle
+        const treeItems = document.querySelectorAll('#treeList li');
+        treeItems.forEach(item => {
+            const lat = parseFloat(item.getAttribute('data-lat'));
+            const lng = parseFloat(item.getAttribute('data-lng'));
+            let marker = L.marker([lat, lng], {icon: treeIcon}).addTo(map); // Utiliser l'icône personnalisée ici
+            marker.bindPopup("Commande N°" + item.querySelector('h2').textContent);
+        });
+    }
+
+    function showTreeOnMap(lat, lng) {
+        map.setView([lat, lng], 16);
+    }
+
+    document.getElementById('searchButton').addEventListener('click', function() {
+        const searchValue = document.getElementById('search').value;
+        window.location.href = `/validated-trees?search=${searchValue}`;
+    });
+
+    document.addEventListener('DOMContentLoaded', initMap);
+</script>
+</body>
+</html>

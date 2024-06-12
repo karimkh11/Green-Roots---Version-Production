@@ -10,7 +10,8 @@ import * as cartController from '../controllers/cartController.js';
 import  { createPaymentIntent, detailController, paymentController } from '../controllers/paymentController.js'
 import { getOrders, validateOrder, getOrderPage, getValidatedOrders, updateOrderStatus } from '../controllers/ordersController.js';
 import { isLoggedIn, isAdmin } from '../middleware/authMiddleware.js';
-import { suiviCommande } from '../controllers/suiviController.js';
+import { plantationController, suiviCommande } from '../controllers/suiviController.js';
+import { createCampaign, formCampaign } from '../controllers/campaignController.js';
 
 const router = express.Router();
 
@@ -56,15 +57,18 @@ router.get('/admin', isAdmin,  adminController.getAdmin);
 router.get('/admin/manage-accounts', isAdmin, adminController.manageAccounts);
 router.post('/admin/create-account', isAdmin, adminController.createAccount);
 
-// Route GET pour afficher le formulaire d'upload (accessible à tous les utilisateurs)
-router.get('/admin/uploadTreeImage', gestionController.uploadTreeImageController);
 
+router.get('/createCampaign', isAdmin, createCampaign);
+router.post('/campaigns', isAdmin, formCampaign);
 // Route POST pour gérer l'upload d'image (accessible uniquement aux administrateurs)
-router.post('/uploadTreeImage', gestionController.uploadController);
+router.get('/add-tree', gestionController.getAddTreeForm);
+router.post('/add-tree', gestionController.addTree);
 
 router.get('/profile',isLoggedIn, profileController.getProfile);
 router.get('/profile/edit', isLoggedIn, profileController.getEditProfile);
 router.get('/myorders', isLoggedIn, suiviCommande);
+// Route pour afficher les arbres validés
+router.get('/validated-trees', plantationController);
 router.post('/profile/edit', isLoggedIn, profileController.updateProfile);
 // Route de déconnexion
 router.post('/logout', profileController.logout);
