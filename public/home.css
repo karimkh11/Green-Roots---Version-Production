@@ -1,0 +1,55 @@
+.home-presentation{
+    background-image: url('../img/arbre.jpg');
+    background-position:center;
+    background-size: cover;
+    
+    display: flex;
+    justify-content:end;
+    flex-direction: column;
+    align-items:end;
+}
+
+.home-content{
+    color: rgb(255, 255, 255);
+    background-color: rgba(32, 200, 66, 0.354);
+    margin: 4rem 1rem;
+}
+
+.home-action-button{
+    color: rgb(0, 0, 0);
+    background-color: #e2e21a;
+    border-radius: 3px;
+    padding: 5px;
+    margin: 20px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.home-action-button:hover{
+    color: #2c9400;
+}
+
+.home-campaign{
+    
+    margin-top: 1rem;
+}
+
+.item{
+    height: 18rem;
+}
+
+.carousel-inner .item img {
+    width: 80%;
+    height: 80%;
+    display: block;
+    margin: 20% auto;
+    object-fit: cover;
+}
+
+@media (min-width: 425px) {
+    .carousel-inner .item img {
+        width: 100%;
+        height: 100%;
+        /* margin: 20% auto; */
+    }
+}

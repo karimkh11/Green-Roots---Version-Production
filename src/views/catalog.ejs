@@ -6,7 +6,7 @@
         <img src="<%= tree.image %>" alt="<%= tree.name %>">
         <h3><%= tree.name %></h3>
         <p><%= tree.description %></p>
-        <a href="/detail/<%= tree.campaignId %>"><%= tree.campaign.name %></a>
+        <a href="/detail/<%= tree.campaign_id %>"><%= tree.campaign.name %></a>
         <p>Prix: <%= tree.price %> €</p>
         <form action="/cart/add" method="post">
             <div class="quantity">

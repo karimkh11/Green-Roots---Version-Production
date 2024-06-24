@@ -1,0 +1,93 @@
+.trees {
+    padding: 10px;
+}
+
+span {
+    font-weight: bold;
+}
+
+.cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+
+}
+
+.card {
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 1.5rem;
+    width: 100%;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+@media only screen and (min-width: 768px) {
+    .trees {
+            padding: 20px;
+        }
+    .card {
+        width: calc((100% - 2rem) / 2);
+    }
+}
+
+@media only screen and (min-width: 1024px) {
+    .trees {
+            padding: 20px;
+        }
+    .card {
+        width: calc((100% - 4rem) / 3);
+    }
+ }
+
+.quantity {
+    display: flex;
+    width: 30%;
+    border: 2px solid rgb(173, 216, 230);
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.counter-input {
+    width: 90%;
+}
+
+.quantity button {
+    background-color: rgb(102, 168, 148);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    width: 30px;
+    height: auto;
+    text-align: center;
+    transition: background-color 0.2s;
+}
+
+.quantity button:hover {
+    background-color: #2980b9;
+}
+
+.input-box {
+    width: 40px;
+    text-align: center;
+    border: none;
+    padding: 8px 10px;
+    font-size: 16px;
+    outline: none;
+}
+
+/* Hide the number input spin buttons */
+.input-box::-webkit-inner-spin-button,
+.input-box::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.input-box[type="number"] {
+    -moz-appearance: textfield;
+}
+
+.add-basket {
+   color: rgb(89, 62, 43);
+}

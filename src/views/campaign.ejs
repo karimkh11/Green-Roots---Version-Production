@@ -10,7 +10,7 @@
                 <% for(const tree of campaign.trees) { %>
                     <p><%= tree.name %></p> <!-- Ajout de l'unité de monnaie -->
                 <% } %>
-                <a href="/panier/<%= campaign.treesId %>">Savoir plus</a> <!-- Lien dynamique vers le panier -->
+                <a class="card__link" href="/detail/<%= campaign.id %>" aria-label="En savoir plus: La detail de la campagne">En savoir plus</a> <!-- Lien dynamique vers le panier -->
             </article>
         <% } %>
     </div>

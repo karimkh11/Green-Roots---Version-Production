@@ -12,13 +12,15 @@ import { getOrders, validateOrder, getOrderPage, getValidatedOrders, updateOrder
 import { isLoggedIn, isAdmin } from '../middleware/authMiddleware.js';
 import { plantationController, suiviCommande } from '../controllers/suiviController.js';
 import { createCampaign, formCampaign } from '../controllers/campaignController.js';
-
+import detailPageController from '../controllers/detailController.js'
 const router = express.Router();
 
 
 router.get('/', userController.home);
 router.get('/catalog', getTrees);
 router.get('/campaign', getCampaign );
+//Route de la page detail
+router.get('/detail/:id', detailPageController.getDetail);
 // Route pour afficher le contenu du panier
 router.get('/cart', cartController.getCart);
 
@@ -34,8 +36,7 @@ router.post('/cart/clear', cartController.clearCart);
 // Route pour mettre à jour la quantité d'un article dans le panier
 router.post('/cart/update', cartController.updateCartQuantity);
 
-router.post('/checkout', isLoggedIn, cartController.checkout);
-router.get('/orders1',  isLoggedIn, getOrders );
+
 // Login route
 router.get('/login', loginController.getLogin);
 router.post('/login', loginController.login);
@@ -58,7 +59,7 @@ router.get('/admin/manage-accounts', isAdmin, adminController.manageAccounts);
 router.post('/admin/create-account', isAdmin, adminController.createAccount);
 
 
-router.get('/createCampaign', isAdmin, createCampaign);
+router.get('/createCampaign', isAdmin,  createCampaign);
 router.post('/campaigns', isAdmin, formCampaign);
 // Route POST pour gérer l'upload d'image (accessible uniquement aux administrateurs)
 router.get('/add-tree', isAdmin, gestionController.getAddTreeForm);
@@ -68,11 +69,16 @@ router.get('/profile',isLoggedIn, profileController.getProfile);
 router.get('/profile/edit', isLoggedIn, profileController.getEditProfile);
 router.get('/myorders', isLoggedIn, suiviCommande);
 // Route pour afficher les arbres validés
-router.get('/validated-trees', plantationController);
+router.get('/validated-trees', isLoggedIn, plantationController);
 router.post('/profile/edit', isLoggedIn, profileController.updateProfile);
 // Route de déconnexion
 router.post('/logout', profileController.logout);
 
+
+
+
+router.post('/checkout', isLoggedIn, cartController.checkout);
+router.get('/orders1',  isLoggedIn, getOrders );
 
 // User routes
 // router.get('/users', userController.index);

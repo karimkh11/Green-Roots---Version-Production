@@ -1,0 +1,36 @@
+<%- include('partials/headeer') %>
+<main role="main" id="mainContent" class="detail__content">
+    <div class="detail">
+        <h1 class="detail__content__title">Détail de la campagne</h1>
+        <section aria-label="<%= campaign.name %>" class="detail__segment">
+            <article class="detail__segment__article">
+                <h2 class="detail__segment__title">
+                    <%= campaign.name %>
+                </h2>
+                <img class="detail-img" src="<%= campaign.image %>" alt="<%= campaign.name %>">
+                <% if (campaign.description) { %>
+                    <p>
+                        <span>Description:</span>
+                        <%= campaign.description %>
+                    </p>
+                <% } %>
+                <% if (campaign.trees && campaign.trees.length > 0) { %>
+                    <ul>
+                        <% campaign.trees.forEach(tree => { %>
+                            <li>
+                                <span>Arbres:</span>
+                                <%= tree.name %>
+                            </li>
+                        <% }); %>
+                    </ul>
+                <% } else { %>
+                    <p>Aucun arbre associé à cette campagne.</p>
+                <% } %>
+            </article>
+        </section>
+    </div>
+</main>
+</body>
+</html>
+    
+    <%- include('partials/footer') %>

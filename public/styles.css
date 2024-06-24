@@ -56,22 +56,7 @@
     /* Ajoutez d'autres styles selon vos besoins */
 }
   
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
 
-/* body {
-    font-family: Arial, sans-serif;
-}
-* {box-sizing:border-box} */
-
-/* Slideshow container */
-body{
-  padding:0;
-  margin:0;
-}
 .vid-container{
 
   position:relative;
@@ -231,23 +216,7 @@ body{
 .link {
   color: #F2F7F3;
 }
-/* //////////////////////////////////////////*/
-/* Basic styling for the main container */
-/* Basic styling for the main container */
-/* Basic styling for the main container */
-main {
-  background-image:url(arbre.jpg) ;
-  background-size: cover; /* Assure que l'image couvre toute la surface */
-  background-position: center; /* Centre l'image */
-  background-repeat: no-repeat; /* Empêche la répétition de l'image */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: calc(100vh - 100px); /* Adjusting height for the header */
-  padding-top: 50px; /* Space for header */
-  background-color: #f7f7f7;
-  font-family: Arial, sans-serif;
-}
+
 
 .container {
  
@@ -273,11 +242,7 @@ ul {
   padding-left: 1.5rem;
 }
 
-/* ul li {
-  list-style-type: disc;
-} */
 
-/* Styling for the form and form elements */
 form {
   display: flex;
   flex-direction: column;
@@ -381,15 +346,7 @@ p {
   margin-top: 20px;
 }
 
-.main {
-  body {
-    background-image: url('arbre.jpg');
-    background-size: cover; /* Assure que l'image couvre toute la surface */
-    background-position: center; /* Centre l'image */
-    background-repeat: no-repeat; /* Empêche la répétition de l'image */
-  }
-  
-}
+
 
 /* admin==================================================================== */
 .flex {
@@ -427,4 +384,500 @@ footer {
 }
 .admin {
   color: #007bff;
+}
+/*=================================================================*/
+.detail__content {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.detail__content__title {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.detail__segment {
+  margin-bottom: 20px;
+}
+
+.detail__segment__article {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.detail__segment__title {
+  font-size: 1.8em;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.detail-img {
+  width: 100%;
+  height: auto;
+  max-height: 400px; /* Set a max height for the image */
+  object-fit: cover; /* Ensures images cover the area without distortion */
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.detail__segment p {
+  font-size: 1.1em;
+  color: #666;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.detail__segment p span {
+  font-weight: bold;
+  color: #333;
+}
+
+.detail__segment ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+}
+
+.detail__segment ul li {
+  font-size: 1.1em;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.detail__segment ul li span {
+  font-weight: bold;
+  color: #333;
+}
+/*==========================================================*/
+.footer-container {
+  display: flex;
+  justify-content: space-around;
+  background-color: #333;
+  color: white;
+  padding: 20px 0;
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+.footer-partners {
+  margin-bottom: 20px;
+}
+
+.footer-partners-text {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+}
+
+.footer-partners-img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer-partners-img-item {
+  margin: 0 10px;
+  height: 50px; /* Adjust as needed */
+  width: 50px;
+}
+
+.footer-contact {
+  margin-bottom: 20px;
+}
+
+.footer-contact a {
+  display: block;
+  color: white;
+  margin: 5px 0;
+  text-decoration: none;
+  font-size: 1em;
+}
+
+.footer-contact a:hover {
+  text-decoration: underline;
+}
+
+.footer-reseau-logo {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.footer-reseau-logo .footer-link {
+  margin: 0 10px;
+}
+
+.footer-reseau-logo .contact-logo {
+  height: 30px; /* Adjust as needed */
+}
+
+.footer-copyright {
+  display: block;
+  margin: 10px 0;
+  font-size: 0.9em;
+}
+
+.footer-mentions {
+  color: white;
+  text-decoration: none;
+}
+
+.footer-mentions:hover {
+  text-decoration: underline;
+}
+/*=========================================*/
+.gestion-commandes-title {
+  text-align: center;
+  color: #333;
+  margin: 20px 0;
+}
+
+.gestion-commandes-nav {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+  text-align: center;
+}
+
+.gestion-commandes-nav a {
+  text-decoration: none;
+  color: #5cb85c;
+  font-size: 1.2em;
+}
+
+.gestion-commandes-nav a:hover {
+  text-decoration: underline;
+}
+
+.gestion-commandes-form {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.gestion-commandes-form input[type="text"] {
+  padding: 10px;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.gestion-commandes-form button {
+  padding: 10px 20px;
+  font-size: 1em;
+  background-color: #5cb85c;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.gestion-commandes-form button:hover {
+  background-color: #4cae4c;
+}
+
+.gestion-commandes-table {
+  width: 100%;
+  max-width: 1200px;
+  margin: 20px auto;
+  border-collapse: collapse;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.gestion-commandes-table th, .gestion-commandes-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+.gestion-commandes-table th {
+  background-color: #f4f4f4;
+}
+
+.gestion-commandes-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.gestion-commandes-table tr:hover {
+  background-color: #f1f1f1;
+}
+
+.gestion-commandes-button {
+  padding: 5px 10px;
+  background-color: #5cb85c;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.gestion-commandes-button:hover {
+  background-color: #4cae4c;
+}
+/*======================================================*/
+.suivi-commandes-title {
+  text-align: center;
+  color: #333;
+  margin: 20px 0;
+}
+
+.suivi-commandes-form {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.suivi-commandes-form input[type="text"] {
+  padding: 10px;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.suivi-commandes-form button {
+  padding: 10px 20px;
+  font-size: 1em;
+  background-color: #5cb85c;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.suivi-commandes-form button:hover {
+  background-color: #4cae4c;
+}
+
+.suivi-commandes-table {
+  width: 100%;
+  max-width: 1200px;
+  margin: 20px auto;
+  border-collapse: collapse;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.suivi-commandes-table th, .suivi-commandes-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+.suivi-commandes-table th {
+  background-color: #f4f4f4;
+}
+
+.suivi-commandes-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.suivi-commandes-table tr:hover {
+  background-color: #f1f1f1;
+}
+
+.status-select {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1em;
+}
+/*========================================================*/
+.home-main {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+}
+
+.home-title {
+  text-align: center;
+  color: #333;
+  margin: 20px 0;
+  font-size: 2.5em;
+}
+
+.home-presentation {
+  text-align: center;
+  margin: 20px 0;
+  padding: 0 20px;
+}
+
+.home-content {
+  font-size: 1.2em;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.home-action-button {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 1.2em;
+  background-color: #5cb85c;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.home-action-button:hover {
+  background-color: #4cae4c;
+}
+
+.home-campaign {
+  margin: 20px auto;
+  max-width: 1200px;
+  padding: 20px;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.home-campaign h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.carousel {
+  position: relative;
+  margin: 0 auto;
+}
+
+.carousel-inner {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.carousel-inner .item {
+  display: none;
+  position: relative;
+  transition: transform 0.6s ease;
+}
+
+.carousel-inner .item.active {
+  display: block;
+}
+
+.carousel-control {
+  position: absolute;
+  top: 50%;
+  width: 50px;
+  height: 50px;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  color: white;
+  text-align: center;
+  line-height: 50px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.carousel-control:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.carousel-control.left {
+  left: 10px;
+}
+
+.carousel-control.right {
+  right: 10px;
+}
+
+.carousel-indicators {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  padding-left: 0;
+  margin-left: 0;
+  list-style: none;
+}
+
+.carousel-indicators li {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin: 1px;
+  text-indent: -999px;
+  border: 1px solid white;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+}
+
+.carousel-indicators .active {
+  background-color: white;
+}
+/*=========================================================*/
+.commandes-body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+}
+
+.commandes-title {
+  text-align: center;
+  color: #333;
+  margin: 20px 0;
+  font-size: 2em;
+}
+
+.commandes-list {
+  list-style: none;
+  padding: 0;
+  max-width: 800px;
+  margin: 20px auto;
+}
+
+.commandes-item {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.commandes-item h2 {
+  font-size: 1.5em;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.commandes-item p {
+  font-size: 1.1em;
+  color: #666;
+  margin: 5px 0;
+}
+
+.commandes-item .command-details {
+  margin-bottom: 10px;
+}
+
+.commandes-item .total-price {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #333;
+}
+
+.no-pending-orders {
+  text-align: center;
+  font-size: 1.2em;
+  color: #333;
+  margin: 20px 0;
 }

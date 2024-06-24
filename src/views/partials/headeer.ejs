@@ -7,10 +7,18 @@
   <meta name="description" content="Green Roots ....">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link rel="stylesheet" href="/styles.css">
-  <link rel="stylesheet" href="/buttonclick.css">
   <link href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" rel="stylesheet">
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script src="https://js.stripe.com/v3/"></script> <!-- Inclure Stripe.js -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="/assets/css/reset.css">
+ <link rel="stylesheet" href="/assets/css/style.css">
+  
+  <link rel="stylesheet" href="/assets/css/home.css">
+  <link rel="stylesheet" href="/assets/css/catalogue.css">
+  <link rel="stylesheet" href="/assets/css/footer.css">
   <title><%= title %></title>
   <link rel="stylesheet" href="createCampaign.css">
   <style>
@@ -115,12 +123,13 @@
         <li><a href="/" class="lien">ACCUEIL</a></li>
         <li><a href="/catalog" class="lien">CATALOGUE D'ARBRES</a></li>
         <li><a href="/campaign" class="lien">CAMPAGNES</a></li>
-        <li><a href="/cart" class="lien">Panier</a></li>
+        <li><a href="/cart" class="lien"><i class="fa-solid fa-basket-shopping"></i>Panier</a></li>
         <% if (user) { %>
           <% if (user.role === 'admin') { %>
             <li><a href="/admin"><i class="fas fa-user" id="profile-icon"></i></a></li>
           <% } else if (user.role === 'user') { %>
             <li><a href="/profile"><i class="fas fa-user" id="profile-icon"></i></a></li>
+            
           <% } %>
         <% } else { %>
           <li><a href="/login" class="disconnected"><i class="fas fa-user"></i> Login</a></li>

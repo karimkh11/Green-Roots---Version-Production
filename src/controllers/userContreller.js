@@ -1,15 +1,29 @@
-import {User} from '../models/index.js';
+import { Campaign } from '../models/index.js';
 
+// Contrôleur utilisateur
 const userController = {
 
-  home:  (req, res) => {
-    const title = 'Accueil'; // Définir la variable title
-    const user = req.user; // Récupérer l'utilisateur connecté depuis la requête
-    res.render('home', { title: title, user: user }); // Transmettre les variables title et user à la vue
+  // Action pour afficher la page d'accueil
+  home: async(req, res) => {
+    try {
+      // On récupère les dernières campagnes enregistrées en base de données
+      const lastCampaigns = await Campaign.findAll(
+        {
+          order: [
+            // On trie en partant de la fin
+            ['id', 'DESC'],
+          ],
+          // On limite aux 3 premiers enregistrements
+          limit: 3
+        }
+      );
 
+      res.render('home', { title: 'Accueil', lastCampaigns, user: req.user });
+    } catch (error) {
+      res.status(500).send('Erreur serveur');
+    }
   },
-  
-
 };
 
-export default userController
+// Exporter le contrôleur utilisateur pour pouvoir l'utiliser dans d'autres parties de l'application
+export default userController;

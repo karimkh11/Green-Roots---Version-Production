@@ -1,0 +1,45 @@
+.profil {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.profil-title {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    font-weight: bold;
+    background-color: #f2f2f2;
+}
+
+.button,
+.connected {
+    background-color: rgb(102, 168, 148);
+    color: rgb(0, 0, 0);
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 10px 0;
+    border-radius: 1rem;
+}
+
+.button:hover,
+.connected:hover {
+    background-color: rgb(173, 216, 230);
+}

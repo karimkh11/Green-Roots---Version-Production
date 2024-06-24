@@ -1,30 +1,29 @@
 <%- include('partials/headeer') %>
 
-<h1>Mes Commandes</h1>
-<ul>
+<h1 class="commandes-title">Mes Commandes</h1>
+<ul class="commandes-list">
     <% let hasPendingOrders = false; %>
     <% orders.forEach(order => { %>
         <% if (order.status === 'En attente') { %>
             <% hasPendingOrders = true; %>
         <% } %>
-        <li>
+        <li class="commandes-item">
             <h2>Commande N°<%= order.id %>, Passée le: <%= new Date(order.createdAt).toLocaleDateString() %></h2>
             <% let totalPrice = 0; %>
             <% order.commandLines.forEach(line => { %>
-                <div>
+                <div class="command-details">
                     <p>GPS: <%= line.tree.gps_coordinates %></p>
                     <p>Arbre: <%= line.tree.name %> (Campagne: <%= line.tree.campaign ? line.tree.campaign.name : 'N/A' %>)</p>
                     <p>Quantité: <%= line.quantity %></p>
                 </div>
                 <% totalPrice += line.quantity * line.tree.price; %> <!-- Ajouté hypothétiquement si tu as un prix par arbre -->
             <% }); %>
-            <p>Total de la Commande: <%= totalPrice.toFixed(2) %> €</p> <!-- Utilisé le totalPrice calculé -->
+            <p class="total-price">Total de la Commande: <%= totalPrice.toFixed(2) %> €</p> <!-- Utilisé le totalPrice calculé -->
             <p>Status: <%= order.status %></p>
         </li>
     <% }); %>
     <% if (!hasPendingOrders) { %>
-        <p>Il n'y a plus de commandes en attente.</p>
+        <p class="no-pending-orders">Il n'y a plus de commandes en attente.</p>
     <% } %>
 </ul>
-
-
+<%- include('partials/footer') %>

@@ -1,62 +1,63 @@
 <%- include('partials/headeer') %>
-<h1>Gestion des Commandes</h1>
-<li><a href="/admin/validated-orders">Gestion des commandes</a></li>
-<form action="/orders" method="get">
-    <input type="text" name="email" placeholder="Recherche par email" value="<%= search %>">
-    <button type="submit">Rechercher</button>
-</form>
+<h1 class="gestion-commandes-title">Gestion des Commandes</h1>
+    <ul class="gestion-commandes-nav">
+        <li><a href="/admin/validated-orders">Commande validée</a></li>
+    </ul>
+    <form action="/orders" method="get" class="gestion-commandes-form">
+        <input type="text" name="email" placeholder="Recherche par email" value="<%= search %>">
+        <button type="submit">Rechercher</button>
+    </form>
 
-<% if (orders.length > 0) { %>
-    <table>
-        <thead>
-            <tr>
-                <th>N</th>
-                <th>Date commande</th>
-                <th>Client</th>
-                <th>Nom du produit</th>
-                <th>Quantité</th>
-                <th>Prix</th>
-                <th>Payé</th>
-                <th>Status</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <% orders.forEach(order => { %>
-                <tr id="order-row-<%= order.id %>">
-                    <td><%= order.id %></td>
-                    <td><%= order.order_date ? new Date(order.order_date).toISOString().split('T')[0] : 'Date non disponible' %></td>
-                    <td><%= order.user ? order.user.firstname + ' ' + order.user.lastname : 'Utilisateur inconnu' %></td>
-                    <td>
-                        <% if (order.commandLines && order.commandLines.length > 0) { %>
-                            <%= order.commandLines.reduce((acc, cl) => acc + (cl.tree ? cl.tree.name : 'Arbre non spécifié') + ', ', '').slice(0, -2) %>
-                        <% } else { %>
-                            Aucun produit
-                        <% } %>
-                    </td>
-                    <td>
-                        <% if (order.commandLines && order.commandLines.length > 0) { %>
-                            <%= order.commandLines.reduce((acc, cl) => acc + cl.quantity + ', ', '').slice(0, -2) %>
-                        <% } else { %>
-                            Aucune quantité
-                        <% } %>
-                    </td>
-                    <td><%= order.total.toFixed(2) %> €</td>
-                    <td><%= order.paid ? 'Oui' : 'Non' %></td>
-                    <td><%= order.status %></td>
-                    <td>
-                        <% if (order.status !== 'Validée') { %>
-                          <button class="validate-order-button" data-order-id="<%= order.id %>">Valider</button>
-
-                        <% } %>
-                    </td>
+    <% if (orders.length > 0) { %>
+        <table class="gestion-commandes-table">
+            <thead>
+                <tr>
+                    <th>N</th>
+                    <th>Date commande</th>
+                    <th>Client</th>
+                    <th>Nom du produit</th>
+                    <th>Quantité</th>
+                    <th>Prix</th>
+                    <th>Payé</th>
+                    <th>Status</th>
+                    <th>Actions</th>
                 </tr>
-            <% }); %>
-        </tbody>
-    </table>
-<% } else { %>
-    <p>Aucune commande trouvée.</p>
-<% } %>
+            </thead>
+            <tbody>
+                <% orders.forEach(order => { %>
+                    <tr id="order-row-<%= order.id %>">
+                        <td><%= order.id %></td>
+                        <td><%= order.order_date ? new Date(order.order_date).toISOString().split('T')[0] : 'Date non disponible' %></td>
+                        <td><%= order.user ? order.user.firstname + ' ' + order.user.lastname : 'Utilisateur inconnu' %></td>
+                        <td>
+                            <% if (order.commandLines && order.commandLines.length > 0) { %>
+                                <%= order.commandLines.reduce((acc, cl) => acc + (cl.tree ? cl.tree.name : 'Arbre non spécifié') + ', ', '').slice(0, -2) %>
+                            <% } else { %>
+                                Aucun produit
+                            <% } %>
+                        </td>
+                        <td>
+                            <% if (order.commandLines && order.commandLines.length > 0) { %>
+                                <%= order.commandLines.reduce((acc, cl) => acc + cl.quantity + ', ', '').slice(0, -2) %>
+                            <% } else { %>
+                                Aucune quantité
+                            <% } %>
+                        </td>
+                        <td><%= order.total.toFixed(2) %> €</td>
+                        <td><%= order.paid ? 'Oui' : 'Non' %></td>
+                        <td><%= order.status %></td>
+                        <td>
+                            <% if (order.status !== 'Validée') { %>
+                                <button class="gestion-commandes-button validate-order-button" data-order-id="<%= order.id %>">Valider</button>
+                            <% } %>
+                        </td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    <% } else { %>
+        <p>Aucune commande trouvée.</p>
+    <% } %>
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {

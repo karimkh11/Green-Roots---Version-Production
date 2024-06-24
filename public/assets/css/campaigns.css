@@ -1,0 +1,45 @@
+.campaigns {
+    padding: 10px;
+}
+
+span {
+    font-weight: bold;
+}
+
+.cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+
+}
+
+.card {
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 1.5rem;
+    width: 100%;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.card__link {
+    font-weight: bold;
+    color: rgb(89, 62, 43);
+}
+
+@media only screen and (min-width: 768px) {
+    .campaigns {
+            padding: 20px;
+        }
+    .card {
+        width: calc((100% - 2rem) / 2);
+    }
+}
+
+@media only screen and (min-width: 1024px) {
+    .campaigns {
+            padding: 20px;
+        }
+    .card {
+        width: calc((100% - 4rem) / 3);
+    }
+}

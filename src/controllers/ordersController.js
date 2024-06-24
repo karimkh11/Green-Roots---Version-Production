@@ -8,10 +8,10 @@ import { Op } from 'sequelize';
         where: { user_id: req.user.id },
         include: [{
           model: CommandLine,
-          as: 'commandLines',  // Ajoutez l'alias ici
+          as: 'commandLines', 
           include: [{
             model: Tree,
-            as: 'tree'  // Assurez-vous que l'alias pour Tree est correct
+            as: 'tree'  
           }]
         }],
         order: [['id', 'ASC']]

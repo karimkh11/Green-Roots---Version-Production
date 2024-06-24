@@ -1,50 +1,47 @@
 <%- include('partials/headeer') %>
-<h1>Gestion des Commandes Validées</h1>
-<form action="/admin/validated-orders" method="get">
-    <input type="text" name="email" placeholder="Recherche par email" value="<%= search %>">
-    <button type="submit">Rechercher</button>
-</form>
+<h1 class="suivi-commandes-title">Suivi de commande</h1>
+    <form action="/admin/validated-orders" method="get" class="suivi-commandes-form">
+        <input type="text" name="email" placeholder="Recherche par email" value="<%= search %>">
+        <button type="submit">Rechercher</button>
+    </form>
 
-<% if (orders.length > 0) { %>
-    <table>
-        <thead>
-            <tr>
-                <th>N° commande</th>
-                <th>Date de commande</th>
-                <th>Nom du client</th>
-                <th>Nom du produit</th>
-                <th>Quantité</th>
-                <th>Prix</th>
-                <th>Status</th>
-                
-            </tr>
-        </thead>
-        <tbody>
-            <% orders.forEach(order => { %>
+    <% if (orders.length > 0) { %>
+        <table class="suivi-commandes-table">
+            <thead>
                 <tr>
-                    <td><%= order.id %></td>
-                    <td><%= order.order_date ? new Date(order.order_date).toISOString().split('T')[0] : 'Date non disponible' %></td>
-                    <td><%= order.user ? order.user.firstname + ' ' + order.user.lastname : 'Utilisateur inconnu' %></td>
-                    <td><%= order.commandLines.map(cl => cl.tree.name).join(', ') %></td>
-                    <td><%= order.commandLines.map(cl => cl.quantity).join(', ') %></td>
-                    <td><%= order.total.toFixed(2) %> €</td>
-                    <td>
-                        <select id="status-select-<%= order.id %>" onchange="updateOrderStatus(<%= order.id %>, this.value)">
-                            <option value="Validée" <%= order.status === 'Validée' ? 'selected' : '' %>>Validée</option>
-                            <option value="En attente de plantation" <%= order.status === 'En attente de plantation' ? 'selected' : '' %>>En attente de plantation</option>
-                            <option value="Plantée" <%= order.status === 'Plantée' ? 'selected' : '' %>>Plantée</option>
-                        </select>
-                    </td>
-                    <td>
-                        <!-- Bouton retiré, mise à jour gérée par le sélecteur -->
-                    </td>
+                    <th>N° commande</th>
+                    <th>Date de commande</th>
+                    <th>Nom du client</th>
+                    <th>Nom du produit</th>
+                    <th>Quantité</th>
+                    <th>Prix</th>
+                    <th>Status</th>
                 </tr>
-            <% }); %>
-        </tbody>
-    </table>
-<% } else { %>
-    <p>Aucune commande trouvée.</p>
-<% } %>
+            </thead>
+            <tbody>
+                <% orders.forEach(order => { %>
+                    <tr>
+                        <td><%= order.id %></td>
+                        <td><%= order.order_date ? new Date(order.order_date).toISOString().split('T')[0] : 'Date non disponible' %></td>
+                        <td><%= order.user ? order.user.firstname + ' ' + order.user.lastname : 'Utilisateur inconnu' %></td>
+                        <td><%= order.commandLines.map(cl => cl.tree.name).join(', ') %></td>
+                        <td><%= order.commandLines.map(cl => cl.quantity).join(', ') %></td>
+                        <td><%= order.total.toFixed(2) %> €</td>
+                        <td>
+                            <select id="status-select-<%= order.id %>" class="status-select" onchange="updateOrderStatus(<%= order.id %>, this.value)">
+                                <option value="Validée" <%= order.status === 'On croissance' ? 'selected' : '' %>>On croissance </option>
+                                <option value="En attente de plantation" <%= order.status === 'En attente de plantation' ? 'selected' : '' %>>En attente de plantation</option>
+                                <option value="Plantée" <%= order.status === 'Plantée' ? 'selected' : '' %>>Plantée</option>
+                            </select>
+                        </td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    <% } else { %>
+        <p>Aucune commande trouvée.</p>
+    <% } %>
+    
 
 <script>
 function updateOrderStatus(orderId, status) {
