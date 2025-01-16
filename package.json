@@ -10,7 +10,7 @@
   "scripts": {
     "test": "jest",
     "start": "node serveur.js",
-    "dev": "nodemon index",
+    "dev": "nodemon serveur.js",
     "create:admin": "node script/serveur.js"
   },
   "author": "",
