@@ -16,7 +16,7 @@ dotenv.config();
 // On configure express
 const app = express();
 // Soit le port est configuré dans le fichier .env soit il utilisera le port 3000 par défaut
-const PORT = process.env.PORT || 3002;
+const PORT = process.env.PORT || 3003;
 
 // Configure Express to use EJS as templating engine
 app.set('view engine', 'ejs');
