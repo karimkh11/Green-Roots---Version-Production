@@ -1,0 +1,228 @@
+.catalogue-arbres-body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+}
+.header-h1{
+  text-align: center;
+}
+.title {
+  display: inline-block; /* Réduit la largeur à celle du texte */
+  text-align: center;
+  color: #316131;
+  margin-top: 20px;
+  font-weight: 600;
+  font-size: 30px;
+  border-bottom: 2px solid rgba(255, 0, 0, 0.5); /* Bordure partiellement visible par défaut */
+  transition: border-bottom-color 0.3s ease; /* Transition fluide pour la couleur de la bordure */
+}
+
+.title:hover {
+  border-bottom-color: red; /* Change uniquement la couleur de la bordure au survol */
+}
+
+.catalogue-arbres-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 0 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.catalogue-arbres-article {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  height: 100%;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.catalogue-arbres-article:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.catalogue-arbres-article img {
+  width: 100%;
+  height: 350px;
+  object-fit: cover;
+  border-bottom: 1px solid #ddd;
+}
+
+.catalogue-arbres-article h2 {
+  font-size: 25px;
+  color: #282828;
+  font-weight: 550;
+  margin-top: 10px;
+}
+
+.catalogue-arbres-article p {
+  font-size: 1em;
+  color: #353535;
+  margin: 10px 15px;
+  flex: 1;
+}
+
+.catalogue-arbres-article a {
+  display: block;
+  font-size: 16px;
+  color: #316131;
+  font-weight: 600;
+  text-decoration: none;
+  margin: 0 15px 10px 15px;
+}
+
+.catalogue-arbres-article a:hover {
+  text-decoration: underline;
+}
+
+.catalogue-arbres-article .quantity {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px 15px;
+}
+
+.catalogue-arbres-article .counter-button {
+  padding: 10px;
+  background-color: #316131;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+}
+
+.catalogue-arbres-article .counter-button:hover {
+  background-color: #4cae4c;
+}
+
+.catalogue-arbres-article .counter-input {
+  width: 50px;
+  text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin: 0 10px;
+  font-size: 1em;
+  padding: 10px;
+}
+
+.catalogue-arbres-article button[type="submit"] {
+  padding: 10px 20px;
+  font-size: 1em;
+  font-weight: 600;
+  background-color: #316131;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 10px 15px;
+}
+
+.catalogue-arbres-article button[type="submit"]:hover {
+  background-color: #19dd19;
+  margin-top: auto;
+}
+
+/* Responsive Design */
+/* @media (max-width: 1024px) {
+  .catalogue-arbres-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+} */
+
+@media screen and (min-width: 536px) and (max-width: 769px) {
+  .catalogue-arbres-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .catalogue-arbres-title {
+    font-size: 1.5em;
+    margin-top: 15px;
+  }
+
+  /* .catalogue-arbres-grid {
+    grid-template-columns: 1fr;
+    padding: 0 10px;
+  } */
+
+  .catalogue-arbres-article {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    transition: none;
+  }
+
+  .catalogue-arbres-article img {
+    max-height: 150px;
+  }
+}
+
+@media (max-width: 536px) {
+  .catalogue-arbres-title {
+    font-size: 1.2em;
+    margin-top: 10px;
+  }
+
+  .catalogue-arbres-grid {
+    grid-template-columns: 1fr;
+    padding: 0 10px;
+  }
+
+  .catalogue-arbres-article {
+    margin: 0 auto;
+    width: 90%;
+  }
+
+  .catalogue-arbres-article h3 {
+    font-size: 1.2em;
+    margin-top: 8px;
+  }
+
+  .catalogue-arbres-article p {
+    font-size: 0.9em;
+    margin: 8px 10px;
+  }
+
+  .catalogue-arbres-article .counter-button {
+    padding: 5px;
+    font-size: 0.9em;
+  }
+
+  .catalogue-arbres-article button[type="submit"] {
+    padding: 8px 15px;
+    font-size: 0.9em;
+  }
+}
+#erreur {
+  color: red;
+}
+
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: -40px;
+  background: #000;
+  color: #fff;
+  padding: 8px;
+  z-index: 1000;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+.skip-link:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  overflow: visible;
+  clip: auto;
+}

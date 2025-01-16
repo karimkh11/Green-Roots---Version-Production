@@ -30,5 +30,15 @@
         <a class="footer-mentions" href="/mentions-legales">Mentions légales</a>
     </div>
 </footer>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const burger = document.querySelector('.menu-burger');
+      const nav = document.querySelector('.nav');
+  
+      burger.addEventListener('click', () => {
+        nav.classList.toggle('active');
+      });
+    });
+  </script>
 </body>
 </html>

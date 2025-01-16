@@ -1,4 +1,4 @@
-<%- include('partials/headeer') %>
+<%- include('partials/header') %>
 <h1 class="suivi-commandes-title">Suivi de commande</h1>
     <form action="/admin/validated-orders" method="get" class="suivi-commandes-form">
         <input type="text" name="email" placeholder="Recherche par email" value="<%= search %>">
@@ -66,5 +66,4 @@ function updateOrderStatus(orderId, status) {
     });
 }
 </script>
-</body>
-</html>
+<%- include('partials/footer') %>

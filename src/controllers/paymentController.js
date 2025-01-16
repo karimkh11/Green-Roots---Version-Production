@@ -1,27 +1,13 @@
 
 import { Order, User, CommandLine, Tree, Campaign } from '../models/index.js';
 import stripe from '../../config/stripeConfig.js';
-import PDFDocument from 'pdfkit';
-
-import path from 'path';
-import { fileURLToPath } from 'url';
 
 
-// Convertir import.meta.url en chemin de fichier
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
-// Définir le chemin vers le dossier 'invoices'
-const invoicesDir = path.join(__dirname, '../../invoices');
 
-// Vérifier si le dossier existe, sinon le créer
-import fs from 'fs';
 
-if (!fs.existsSync(invoicesDir)) {
-    fs.mkdirSync(invoicesDir, { recursive: true });
-}
 // fonction
-function calculateTotalAmount(cart) {
+export function calculateTotalAmount(cart) {
     // S'assurer que cart est un tableau
     if (!Array.isArray(cart)) {
         console.error('Expected cart to be an array, got:', cart);
@@ -149,53 +135,4 @@ export const createPaymentIntent = async (req, res) => {
 };
 
 
-
-// Fonction pour générer une facture (exemple fictif)
-function generateInvoice(order) {
-    const doc = new PDFDocument();
-
-    // Définir le chemin de sortie du fichier
-    const filePath = path.join(invoicesDir, `Invoice_${order.id}.pdf`);
-
-
-    // Pipe its output somewhere, like to a file or HTTP response
-    // See below for browser usage
-    doc.pipe(fs.createWriteStream(filePath));
-
-    // Ajouter un titre
-    doc.fontSize(25).text('Facture', {
-        align: 'center'
-    });
-
-    // Ajouter les informations de la commande
-    doc.fontSize(12).moveDown();
-    doc.text(`ID Commande: ${order.id}`, {
-        align: 'left'
-    });
-    doc.text(`Statut: ${order.status}`, {
-        align: 'left'
-    });
-    doc.text(`Total Payé: ${order.total / 100} €`, {
-        align: 'left'
-    });
-    doc.text(`Date: ${new Date().toLocaleDateString()}`, {
-        align: 'left'
-    });
-
-    // Lister les articles (simulés ici, vous devrez ajuster en fonction de votre modèle)
-    doc.moveDown().fontSize(18).text('Articles:', {
-        underline: true
-    });
-    order.items.forEach(item => {
-        doc.fontSize(12).text(`${item.description} - ${item.quantity} x ${item.unitPrice / 100} €`);
-    });
-
-    // Ajouter un espace à la fin
-    doc.moveDown().fontSize(14).text('Merci pour votre achat!', {
-        align: 'center'
-    });
-
-    // Finalize PDF file
-    doc.end();
-}
 

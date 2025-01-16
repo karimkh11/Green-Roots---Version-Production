@@ -84,9 +84,9 @@ span {
     margin: 0;
 }
 
-.input-box[type="number"] {
+/* .input-box[type="number"] {
     -moz-appearance: textfield;
-}
+} */
 
 .add-basket {
    color: rgb(89, 62, 43);

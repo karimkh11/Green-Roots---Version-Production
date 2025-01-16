@@ -1,27 +1,87 @@
-
-
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= title %></title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <meta name="description" content="Green Roots ....">
+  <link rel="stylesheet" href="/assets/css/reset.css">
+  <link rel="stylesheet" href="/assets/css/catalogue-arbres.css">
+  <link rel="stylesheet" href="/assets/css/footer.css">
   <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/assets/css/responsive.css">
+  <!-- <meta http-equiv="Content-Security-Policy" content="
+  default-src 'self'; 
+  script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com https://js.stripe.com https://ajax.googleapis.com https://maxcdn.bootstrapcdn.com; 
+  style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://unpkg.com https://maxcdn.bootstrapcdn.com; 
+  img-src 'self' https://res.cloudinary.com data:; 
+  font-src 'self' https://cdnjs.cloudflare.com https://fonts.gstatic.com https://maxcdn.bootstrapcdn.com; 
+  connect-src 'self'; 
+  object-src 'none'; 
+  frame-src 'self' https://js.stripe.com; 
+"> -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" rel="stylesheet">
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="https://js.stripe.com/v3/"></script> <!-- Inclure Stripe.js -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <title>
+    <%=title%>
+  </title>
 </head>
 <body>
+  <a href="#main-content" class="skip-link">Aller au contenu principal</a>
   <header>
-    <nav>
-      <ul>
-        <li><a href="/">Accueil</a></li>
-        <% if (user) { %>
-          <li><a href="/profile"><i class="fas fa-user" id="profile-icon"></i></a></li>
-          <li><form class="element_a" action="/logout" method="POST">
-            <button class="connected" type="submit">Déconnexion</button>
-          </form></li>
-        <% } else { %>
-          <li><a href="/login" class="disconnected"><i class="fas fa-user"></i></a></li>
-        <% } %>
-      </ul>
-    </nav>
+    <div class="header">
+      <!-- Logo -->
+      <a class="header_a" href="/" aria-label="Retour à la page d'accueil">
+        <img class="trans" src="3.png" alt="Logo de Green Roots">
+      </a>
+      
+      <!-- Bouton menu burger -->
+      <button class="menu-burger" aria-label="Ouvrir le menu">☰</button>
+  
+      <!-- Menu de navigation -->
+      <nav class="nav">
+        <ul class="list">
+          <li><a href="/" class="lien" aria-label="Aller à la page d'accueil">ACCUEIL</a></li>
+          <li><a href="/catalog" class="lien" aria-label="Voir le catalogue des arbres">CATALOGUE D'ARBRES</a></li>
+          <li><a href="/campaign" class="lien" aria-label="Découvrir les campagnes en cours">CAMPAGNES</a></li>
+          <li><a href="/cart" class="lien" aria-label="Voir votre panier"><i class="fa-solid fa-basket-shopping"></i> Panier</a></li>
+          <% if (user) { %>
+            <% if (user.role === 'admin') { %>
+              <li>
+                <a href="/admin" aria-label="Accéder à l'espace administrateur">
+                  <i class="fas fa-user" id="profile-icon"></i>
+                  <span class="visually-hidden">Espace administrateur</span>
+                </a>
+              </li>
+            <% } else if (user.role === 'user') { %>
+              <li>
+                <a href="/profile" aria-label="Voir votre profil utilisateur">
+                  <i class="fas fa-user" id="profile-icon"></i>
+                  <span class="visually-hidden">Mon profil</span>
+                </a>
+              </li>
+            <% } %>
+          <% } else { %>
+            <li>
+              <a href="/login" class="disconnected" aria-label="Se connecter">
+                <i class="fas fa-user"></i> Login
+              </a>
+            </li>
+          <% } %>
+        </ul>
+      </nav>
+    </div>
+  
+    <!-- Titre principal -->
+    <div class="header-h1">
+      <h1 class="title" id="page-title"><%= title %></h1>
+    </div>
   </header>
+  
+</body>
+</html>

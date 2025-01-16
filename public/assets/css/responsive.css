@@ -1,0 +1,118 @@
+/* Général pour le header */
+.visually-hidden {
+    display: none;
+  }
+  
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background: white;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+  
+  /* Cacher le nav au départ */
+  .nav {
+    display: none; /* Masqué par défaut */
+    flex-direction: column;
+    background: white;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+  
+  /* Montrer le menu quand actif */
+  .nav.active {
+    display: flex;
+    max-height: 500px; /* Permet de montrer tout le contenu */
+  }
+  
+  /* Liste du menu */
+  .list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .list li {
+    text-align: center;
+    padding: 10px 0;
+  }
+  
+  .lien {
+    text-transform: uppercase;
+    color: #050109bd;
+    font-weight: bold;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+  .lien:hover {
+    color: #316131;
+  }
+  
+  /* Bouton menu burger */
+  .menu-burger {
+    display: none; /* Masqué sur desktop */
+    font-size: 24px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 1100;
+  }
+  /* Navigation visible au-dessus de 768px */
+@media screen and (min-width: 769px) {
+    .nav {
+      display: flex;
+      flex-direction: row;
+      position: static;
+      background: none;
+      max-height: none; /* Supprime la contrainte de hauteur */
+      box-shadow: none; /* Supprime l'ombre si elle existe */
+    }
+  
+    .list {
+      display: flex; /* Assure l'affichage horizontal de la liste */
+      justify-content: space-around; /* Espace entre les éléments */
+      align-items: center;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+  
+    .menu-burger {
+      display: none; /* Masque le bouton burger */
+    }
+  }
+  
+  /* Responsive pour tablette et mobile */
+  @media screen and (max-width: 768px) {
+    .menu-burger {
+      display: block; /* Montrer le bouton sur mobile/tablette */
+    }
+  
+    .nav {
+      position: absolute;
+      top: 60px;
+      width: 100%;
+      flex-direction: column;
+    }
+  
+    .list {
+      flex-direction: column;
+    }
+  
+    .header {
+      justify-content: space-between;
+    }
+  }
+  

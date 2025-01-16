@@ -1,38 +1,44 @@
 
-import {User, Tree} from '../models/index.js';
+// Importation du modèle User depuis '../models/index.js' et de la bibliothèque bcrypt
+import {User} from '../models/index.js';
 import bcrypt from 'bcrypt';
 import PasswordValidator from 'password-validator';
 import validator from 'validator';
 
-
+// Fonction pour afficher la page d'inscription
 export const getSignup = (req, res) => {
+    // Récupérer l'utilisateur connecté (s'il y en a un)
     const user = req.user;
-    const title = 'Inscription'; // Définir la variable title
+    // Définir le titre de la page
+    const title = 'Inscription';
+    // Récupérer les éventuelles erreurs flash
     const errors = req.flash('errors');
-    res.render('register', { title: title, errors: errors, user: user}); // Transmettre les variables title et errors à la vue
+    // Rendre la vue 'register' en transmettant les variables title, errors et user
+    res.render('register', { title: title, errors: errors, user: user});
 };
+
 
 export const postSignup = async (req, res, next) => {
     try {
         // Vérifier si l'email est valide
-        if (!validator.isEmail(req.body.email)) {
-            throw new Error('Adresse e-mail invalide');
-        }
+    if (!validator.isEmail(req.body.email)) {
+        throw new Error('Adresse e-mail invalide');
+    }
 
-        // Créer un nouveau validateur de mot de passe
-        const schema = new PasswordValidator();
+    // Créer un nouveau validateur de mot de passe
+    const schema = new PasswordValidator();
 
-        // Définir les critères du mot de passe
-        schema
-            .is().min(12) // Minimum 12 caractères
-            .has().uppercase() // Au moins une lettre majuscule
-            .has().digits() // Au moins un chiffre
-            .has().symbols(); // Au moins un caractère spécial
+    // Définir les critères du mot de passe
+    schema
+        .is().min(12) // Minimum 12 caractères
+        .has().uppercase() // Au moins une lettre majuscule
+        .has().digits() // Au moins un chiffre
+        .has().symbols(); // Au moins un caractère spécial
 
-        // Valider le mot de passe
-        if (!schema.validate(req.body.password)) {
-            throw new Error('Le mot de passe doit contenir au moins 12 caractères avec au moins une lettre majuscule, un chiffre et un caractère spécial');
-        }
+    // Valider le mot de passe
+    if (!schema.validate(req.body.password)) {
+        throw new Error('Le mot de passe doit contenir au moins 12 caractères avec au moins une lettre majuscule, un chiffre et un caractère spécial');
+    }
         // Créer un nouvel utilisateur
         const newUser = await User.create({
             email: req.body.email,
@@ -43,7 +49,7 @@ export const postSignup = async (req, res, next) => {
             birthday: req.body.birthday,
             locality: req.body.locality,
             role: req.body.role,
-            createdAt: new Date(), // Utilisez created_at au lieu de createdAt
+            createdAt: new Date(),
             updatedAt: null
         });
 

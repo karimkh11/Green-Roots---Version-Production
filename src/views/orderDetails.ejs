@@ -1,20 +1,33 @@
-<%- include('partials/headeer') %>
+<%- include('partials/header') %>
+<nav aria-label="Breadcrumb" class="breadcrumb">
+    <ul class="breadcrumb-list">
+        <li class="breadcrumb-item"><a href="/">Accueil</a></li>
+        <li class="breadcrumb-item"><a href="/catalog">Catalogue</a></li>
+        <li class="breadcrumb-item"><a href="/cart">Panier</a></li>
+        <li class="breadcrumb-item"><a href="/payment">Paiement</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Détails de la Commande</li>
+    </ul>
+</nav>
 
-
-<h2>Détails de la Commande</h2>
-<p>Prix total: <%= order.total.toFixed(2) %> €</p>
-<ul>
-    <% if (order.commandLines && order.commandLines.length > 0) { %>
-        <p>Date de la commande: <%= new Date(order.order_date).toLocaleDateString() %></p>
-        <% order.commandLines.forEach(commandLine => { %>
-            
-            <li>Nom de produit: <%= commandLine.tree.name %></li>
-            <li>Quantité: <%= commandLine.quantity %></li>
-            <li><img src="<%= encodeURI(commandLine.tree.image) %>" alt="<%= encodeURIComponent(commandLine.tree.name) %>"></li>
-        <% }); %>
-    <% } else { %>
-        <li>Aucun article trouvé pour cette commande.</li>
-    <% } %>
-</ul>
-
+<main>
+    <h1 class="order-details-title">Détails de la Commande</h1>
+    <section aria-labelledby="order-total">
+        <h2 id="order-total" class="order-total-price">Prix total: <%= order.total.toFixed(2) %> €</h2>
+        <ul class="order-items-list">
+            <% if (order.commandLines && order.commandLines.length > 0) { %>
+                <p class="order-date">Date de la commande: <%= new Date(order.order_date).toLocaleDateString() %></p>
+                <% order.commandLines.forEach(commandLine => { %>
+                    <li class="order-item">
+                        <p class="order-item-name">Nom de produit: <%= commandLine.tree.name %></p>
+                        <p class="order-item-quantity">Quantité: <%= commandLine.quantity %></p>
+                        <img src="<%= encodeURI(commandLine.tree.image) %>" alt="<%= encodeURIComponent(commandLine.tree.name) %>">
+                    </li>
+                <% }); %>
+            <% } else { %>
+                <li class="no-items">Aucun article trouvé pour cette commande.</li>
+            <% } %>
+        </ul>
+    </section>
+</main>
+<%- include('partials/footer') %>
 

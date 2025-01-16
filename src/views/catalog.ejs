@@ -1,28 +1,59 @@
-<%- include('partials/headeer') %>
-<h2 class="catalogue-arbres-title">Catalogue d'arbres</h2>
-<div class="catalogue-arbres-grid">
-<% trees.forEach(tree => { %>
-    <article class="catalogue-arbres-article">
-        <img src="<%= tree.image %>" alt="<%= tree.name %>">
-        <h3><%= tree.name %></h3>
-        <p><%= tree.description %></p>
-        <a href="/detail/<%= tree.campaign_id %>"><%= tree.campaign.name %></a>
-        <p>Prix: <%= tree.price %> €</p>
-        <form action="/cart/add" method="post">
-            <div class="quantity">
-                <button type="button" class="counter-button counter-up" data-tree-id="<%= tree.id %>">+</button>
-                <input id="quantity-<%= tree.id %>" name="quantity" value="0" type="text" class="counter-input w-input">
-                <button type="button" class="counter-button counter-down" data-tree-id="<%= tree.id %>">-</button>
-            </div>
-            <input type="hidden" name="treeId" value="<%= tree.id %>">
-            <% if (typeof errorMessage !== 'undefined' && errorMessage) { %>
-                <p style="color: red;"><%= errorMessage %></p>
-            <% } %>
-            <button type="submit">Ajouter au panier</button>
-        </form>
-    </article>
-<% }); %>
-</div>
+<%- include('partials/header') %>
+
+<main class="catalogue-arbres-grid" aria-label="Catalogue des arbres">
+    <% trees.forEach(tree => { %>
+        <article class="catalogue-arbres-article" aria-labelledby="tree-title-<%= tree.id %>">
+            <!-- Image de l'arbre avec texte alternatif -->
+            <img src="<%= tree.image %>" alt="<%= tree.name %>" aria-describedby="tree-desc-<%= tree.id %>">
+            
+            <!-- Titre de l'arbre -->
+            <h2 id="tree-title-<%= tree.id %>"><%= tree.name %></h2>
+            
+            <!-- Description de l'arbre -->
+            <p  id="tree-desc-<%= tree.id %>"><%= tree.description %></p>
+            
+            <!-- Lien vers la campagne associée -->
+            <a href="/detail/<%= tree.campaign_id %>" aria-label="Voir la campagne <%= tree.campaign.name %>">
+                <%= tree.campaign.name %>
+            </a>
+            
+            <!-- Prix -->
+            <p>Prix : <%= tree.price %> €</p>
+            
+            <!-- Formulaire d'ajout au panier -->
+            <form action="/cart/add" method="post" aria-labelledby="tree-title-<%= tree.id %>">
+                <fieldset>
+                    <legend>Ajouter au panier</legend>
+                    <div class="quantity">
+                        <!-- Boutons pour augmenter ou diminuer la quantité -->
+                        <button type="button" class="counter-button counter-up" data-tree-id="<%= tree.id %>" 
+                                aria-label="Augmenter la quantité de <%= tree.name %>">
+                            +
+                        </button>
+                        <input id="quantity-<%= tree.id %>" name="quantity" value="0" type="number" 
+                               class="counter-input w-input" 
+                               aria-label="Quantité de <%= tree.name %> à ajouter au panier" min="0">
+                        <button type="button" class="counter-button counter-down" data-tree-id="<%= tree.id %>" 
+                                aria-label="Diminuer la quantité de <%= tree.name %>">
+                            -
+                        </button>
+                    </div>
+                </fieldset>
+                <input type="hidden" name="treeId" value="<%= tree.id %>">
+                
+                <!-- Message d'erreur en cas de problème -->
+                <% if (typeof errorMessage !== 'undefined' && errorMessage) { %>
+                    <p id="erreur" role="alert"><%= errorMessage %></p>
+                <% } %>
+                
+                
+                <!-- Bouton de soumission -->
+                <button type="submit" aria-label="Ajouter <%= tree.name %> au panier">Ajouter au panier</button>
+            </form>
+        </article>
+    <% }); %>
+    </main>
+    
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             document.querySelectorAll('.counter-up').forEach(button => {
@@ -32,7 +63,7 @@
                     input.value = parseInt(input.value) + 1;
                 });
             });
-
+    
             document.querySelectorAll('.counter-down').forEach(button => {
                 button.addEventListener('click', event => {
                     const treeId = event.target.dataset.treeId;
@@ -42,9 +73,13 @@
                     }
                 });
             });
+            const errorMessages = document.querySelectorAll('[role="alert"]');
+        errorMessages.forEach(errorMessage => {
+            setTimeout(() => {
+                errorMessage.style.display = 'none';
+            }, 2000); 
         });
+        });
+      
     </script>
-
     <%- include('partials/footer') %>
-</body>
-</html>

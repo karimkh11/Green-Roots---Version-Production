@@ -6,7 +6,7 @@ import {User} from '../models/index.js';
 export const getProfile = async (req, res) => {
   try {
       if (!req.user || !req.user.id) {
-          throw new Error('User not found or user id is undefined');
+          throw new Error("Utilisateur non trouvé ou identifiant utilisateur manquant.");
       }
       
       const userProfile = await User.findByPk(req.user.id);
@@ -21,9 +21,6 @@ export const getProfile = async (req, res) => {
       res.status(500).send('Erreur serveur');
   }
 };
-
-
-// Afficher la page de modification du profil
 
  // Afficher la page de modification du profil
 export const getEditProfile = async (req, res) => {

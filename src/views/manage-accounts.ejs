@@ -1,8 +1,8 @@
-<%- include('partials/headeer', { title: title }) %>
+<%- include('partials/header') %>
 
 <main>
     <div class="container">
-<h1>Gestion des comptes utilisateurs</h1>
+
 
    <!-- Formulaire de création de compte -->
    <% if (errorMessage && errorMessage.length > 0) { %>
@@ -50,5 +50,4 @@
 </form>
 </div>
 </main>
-</body>
-</html>
+<%- include('partials/footer') %>

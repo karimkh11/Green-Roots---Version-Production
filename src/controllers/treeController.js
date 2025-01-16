@@ -11,15 +11,17 @@ export const getTrees = async (req, res) => {
               attributes: ['name']
           }]
       });
-
+ // Stocker le message d'erreur et le supprimer de la session
+ const errorMessage = req.session.errorMessage;
+ req.session.errorMessage = null; // Réinitialiser immédiatement
       res.render('catalog', {
           title: 'Catalogue d\'arbres',
           trees,
           user: req.user, // Supposons que l'utilisateur est stocké dans req.user après authentification
           isLoggedIn: isLoggedIn,
-          errorMessage: req.session.errorMessage // Passer le message d'erreur à la vue
+          errorMessage: errorMessage,
       });
-      delete req.session.errorMessage; // Nettoyer après affichage
+      
   } catch (error) {
       console.error('Erreur lors de la récupération des arbres:', error);
       res.status(500).send('Erreur serveur');

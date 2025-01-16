@@ -1,7 +1,16 @@
 
-<%- include('partials/headeer') %>
+<%- include('partials/header') %>
+<nav aria-label="Breadcrumb" class="breadcrumb">
+    <ul class="breadcrumb-list">
+        <li class="breadcrumb-item"><a href="/">Accueil</a></li>
+        <li class="breadcrumb-item"><a href="/catalog">Catalogue</a></li>
+        <li class="breadcrumb-item"><a href="/cart">Panier</a></li>
+        <li class="breadcrumb-item"><a href="/payment">Paiement</a></li>
+        
+    </ul>
+</nav>
 
-<h1>Page de Paiement</h1>
+<h1>Passer la commande </h1>
 <ul>
     <% cart.forEach(item=> { %>
         <li class="cart-item">
@@ -71,5 +80,5 @@
     });
 });
 </script>
-    
+<%- include('partials/footer') %>   
 

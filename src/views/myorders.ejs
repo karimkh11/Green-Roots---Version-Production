@@ -1,6 +1,6 @@
-<%- include('partials/headeer') %>
+<%- include('partials/header') %>
 
-<h1 class="commandes-title">Mes Commandes</h1>
+
 <ul class="commandes-list">
     <% let hasPendingOrders = false; %>
     <% orders.forEach(order => { %>
@@ -12,7 +12,7 @@
             <% let totalPrice = 0; %>
             <% order.commandLines.forEach(line => { %>
                 <div class="command-details">
-                    <p>GPS: <%= line.tree.gps_coordinates %></p>
+                    
                     <p>Arbre: <%= line.tree.name %> (Campagne: <%= line.tree.campaign ? line.tree.campaign.name : 'N/A' %>)</p>
                     <p>Quantité: <%= line.quantity %></p>
                 </div>

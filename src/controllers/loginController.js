@@ -1,4 +1,4 @@
-//import { Strategy as LocalStrategy } from 'passport-local';
+
 import passport from 'passport';
 import {User, Tree} from '../models/index.js';
 import flash from 'connect-flash';
@@ -12,7 +12,7 @@ const loginController = {
     const user = req.user;
     res.render('login', { title: title, errorMessage: errorMessage, user: user });
   },
-  
+
   login: async (req, res, next) => {
     passport.authenticate('local', async (err, user, info) => {
       try {
@@ -23,26 +23,49 @@ const loginController = {
           req.flash('error', info.message);
           return res.redirect('/login');
         }
+
+        // Sauvegarder l'état actuel de la session avant `req.login`
+        const savedSessionCart = req.session.cart || '[]';
+
         req.login(user, (err) => {
           if (err) {
             throw err;
           }
-          const cart = JSON.parse(req.body.localCart || '[]');
-          if (cart.length > 0) {
-            req.session.cart = JSON.stringify(cart);
-          } else if (!req.session.cart) {
-            req.session.cart = JSON.stringify([]);
-          }
 
+          // Restaurer le panier de session après `req.login`
+          req.session.cart = req.session.cart || savedSessionCart;
+
+          console.log('Contenu brut du localCart reçu :', req.body.localCart);
+
+          // Récupérer le panier local et le panier en session
+          const localCart = JSON.parse(req.body.localCart || '[]');
+          console.log('Panier local reçu depuis le formulaire :', localCart);
+
+          const sessionCart = JSON.parse(req.session.cart || '[]');
+          console.log('Panier en session avant fusion :', sessionCart);
+
+          // Fusionner les paniers sans doublons
+          const mergedCart = [...sessionCart];
+          localCart.forEach(item => {
+            if (!mergedCart.some(cartItem => cartItem.tree_id === item.tree_id)) {
+              mergedCart.push(item);
+            }
+          });
+          console.log('Panier fusionné :', mergedCart);
+
+          // Sauvegarder le panier fusionné dans la session
+          req.session.cart = JSON.stringify(mergedCart);
           req.session.save(err => {
             if (err) {
-              console.error('Erreur lors de la réinitialisation du panier après connexion :', err);
+              console.error('Erreur lors de la sauvegarde du panier dans la session :', err);
             }
-            // Vérification du rôle après une connexion réussie
+            console.log('Panier en session après sauvegarde :', req.session.cart);
+
+            // Redirection en fonction du rôle
             if (user.role === 'admin') {
-              return res.redirect('/admin'); // Rediriger les administrateurs vers une route spécifique
+              return res.redirect('/admin');
             }
-            return res.redirect('/profile'); // Rediriger où vous le souhaitez après la connexion réussie
+            return res.redirect('/profile');
           });
         });
       } catch (error) {
@@ -54,4 +77,6 @@ const loginController = {
 };
 
 export default loginController;
+
+
 
