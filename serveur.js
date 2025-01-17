@@ -7,7 +7,7 @@ import initialize from './config/passport.js';
 import flash from 'connect-flash';
 import router from './src/router/router.js';
 import expressSanitizer from 'express-sanitizer';
-import pg from 'pg';
+
 // import { Pool } from 'pg';
 import csrf from 'csurf';
 // import helmet from 'helmet'; // Ajout de Helmet pour la sécurité

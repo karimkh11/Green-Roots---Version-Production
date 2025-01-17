@@ -1,7 +1,7 @@
 
 // Importation du modèle User depuis '../models/index.js' et de la bibliothèque bcrypt
 import {User} from '../models/index.js';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import PasswordValidator from 'password-validator';
 import validator from 'validator';
 
