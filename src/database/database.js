@@ -7,6 +7,9 @@ console.log('PG_URL:', process.env.PG_URL); // Ajoutez ce log pour vérifier la 
 const sequelize = new Sequelize(process.env.PG_URL, {
   dialect: 'postgres', // Spécifie explicitement le dialecte
   logging: false,      // Désactive les logs SQL (facultatif)
+  dialectOptions: {
+    family: 4, // Forcer l'utilisation de l'IPv4
+  },
 });
 
 // Tester la connexion à la base de données
