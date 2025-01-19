@@ -8,10 +8,6 @@ import flash from 'connect-flash';
 import router from './src/router/router.js';
 import expressSanitizer from 'express-sanitizer';
 
-// import { Pool } from 'pg';
-import csrf from 'csurf';
-// import helmet from 'helmet'; // Ajout de Helmet pour la sécurité
-
 dotenv.config();
 
 // On configure express
@@ -38,21 +34,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(expressSanitizer());
 
-//  Helmet pour configurer la CSP
-// app.use(
-//   helmet.contentSecurityPolicy({
-//     directives: {
-//       defaultSrc: ["'self'"],
-//       scriptSrc: ["'self'", "https://unpkg.com", "https://js.stripe.com", "https://ajax.googleapis.com", "https://maxcdn.bootstrapcdn.com"],
-//       styleSrc: ["'self'", "'unsafe-inline'", "https://cdnjs.cloudflare.com", "https://unpkg.com", "https://maxcdn.bootstrapcdn.com"],
-//       imgSrc: ["'self'", "https://res.cloudinary.com", "data:"],
-//       fontSrc: ["'self'", "https://cdnjs.cloudflare.com", "https://fonts.gstatic.com", "https://maxcdn.bootstrapcdn.com"],
-//       connectSrc: ["'self'"],
-//       objectSrc: ["'none'"],
-//       frameSrc: ["https://js.stripe.com"]
-//     },
-//   })
-// );
 
 // Configure express-session middleware
 app.use(session({
